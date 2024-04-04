@@ -1,10 +1,10 @@
-# IHNMAIMS_Game
+# IHNMAIMS_Demo
 
-Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ). O jogo foi elaborado e desenvolvido por Breno Alexandre Santana Silva e Breno Menezes Araujo, baseado no conto "Não Tenho Boca e Preciso Gritar" ("I Have No Mouth, and I Must Scream"), de Harlan Ellison.
+Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ). A demonstração do jogo foi elaborado e desenvolvido por Breno Alexandre Santana Silva e Breno Menezes Araujo, baseado no conto "Não Tenho Boca e Preciso Gritar" ("I Have No Mouth, and I Must Scream"), de Harlan Ellison.
 
 ## Descrição
 
-"IHNMAIMS_Game" é uma adaptação interativa do conto de Harlan Ellison. Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
+"IHNMAIMS_Demo" é uma adaptação interativa do conto de Harlan Ellison. Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
 
 O jogador terá que tomar decisões difíceis ao longo do jogo, enfrentando dilemas morais e desafios psicológicos enquanto explora as profundezas da mente humana e as consequências de suas ações.
 
@@ -17,19 +17,19 @@ Para compilar e executar o jogo, siga as instruções abaixo:
 2. Clone este repositório em sua máquina local usando o seguinte comando:
 
 ```
-git clone https://github.com/seu_usuario/IHNMAIMS_Game.git
+git clone https://github.com/brenoasantana/IHNMAIMS_Demo.git
 ```
 
 3. Navegue até o diretório do projeto:
 
 ```
-cd IHNMAIMS_Game
+cd IHNMAIMS_Demo
 ```
 
 4. Compile o código-fonte usando o GCC:
 
 ```
-gcc -o IHNMAIMS_Game main.c
+gcc -o IHNMAIMS_Demo main.c
 ```
 
 5. Execute o jogo:
