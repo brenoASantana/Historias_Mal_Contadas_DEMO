@@ -1,12 +1,10 @@
 # IHNMAIMS_Demo
 
-Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ). A demonstração do jogo foi elaborado e desenvolvido por Breno Alexandre Santana Silva e Breno Menezes Araujo, baseado no conto "Não Tenho Boca e Preciso Gritar" ("I Have No Mouth, and I Must Scream"), de Harlan Ellison.
+Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ).
 
 ## Descrição
 
-"IHNMAIMS_Demo" é uma adaptação interativa do conto de Harlan Ellison. Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
-
-O jogador terá que tomar decisões difíceis ao longo do jogo, enfrentando dilemas morais e desafios psicológicos enquanto explora as profundezas da mente humana e as consequências de suas ações.
+"IHNMAIMS_Demo" é uma adaptação interativa do conto de Harlan Ellison, "Não Tenho Boca e Preciso Gritar". Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
 
 ## Compilação e Execução
 
@@ -44,6 +42,9 @@ Siga as instruções apresentadas no jogo para avançar na história e tomar dec
 
 Contribuições são bem-vindas! Sinta-se à vontade para propor melhorias, corrigir bugs ou implementar novos recursos. Por favor, abra uma issue para discutir as mudanças que deseja realizar.
 
----
+## Desenvolvedores
 
-**Nota:** Este jogo foi desenvolvido apenas para fins educacionais como parte do projeto final da disciplina de Linguagem de Programação I da UERJ. O conto "Não Tenho Boca e Preciso Gritar" e seus personagens são criações de Harlan Ellison, e este jogo é uma adaptação não oficial e sem fins lucrativos.
+Este projeto foi desenvolvido em colaboração por:
+
+- Breno Alexandre Santana Silva
+- Breno Menezes Araujo
