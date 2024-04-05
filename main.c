@@ -2,11 +2,11 @@
 #include <string.h>
 #include <unistd.h> // Para o usleep()
 #include <conio.h>
-#include "inc/fmod.h"
+// #include "inc/fmod.h"
 
-FSOUND_SAMPLE *handle;
+// FSOUND_SAMPLE *handle;
 
-#define atraso 100000 // 100000 microssegundos = 100 milissegundos = 0,1 segundos
+#define atraso 15000 // milisegundos
 
 void imprimirGradualmente(const char *texto, unsigned int microseconds)
 {
@@ -14,7 +14,7 @@ void imprimirGradualmente(const char *texto, unsigned int microseconds)
   {
     putchar(*texto++);
     fflush(stdout); // Força a saída do buffer para o terminal
-    usleep(milliseconds);
+    usleep(microseconds);
   }
 }
 
@@ -27,20 +27,20 @@ void tutorial()
 int main()
 {
   // init FMOD sound system
-  FSOUND_Init(44100, 32, 0);
+  // FSOUND_Init(44100, 32, 0);
 
   // load and play mp3
-  handle = FSOUND_Sample_Load(0, "my.mp3", 0, 0, 0);
-  FSOUND_PlaySound(0, handle);
+  // handle = FSOUND_Sample_Load(0, "my.mp3", 0, 0, 0);
+  // FSOUND_PlaySound(0, handle);
 
   // wait until the users hits a key to end the app
-  while (!_kbhit())
-  {
-  }
+  // while (!_kbhit())
+  // {
+  // }
 
   // clean up
-  FSOUND_Sample_Free(handle);
-  FSOUND_Close();
+  // FSOUND_Sample_Free(handle);
+  // FSOUND_Close();
 
   while (1)
   {
