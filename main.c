@@ -30,7 +30,7 @@ int main()
   // FSOUND_Init(44100, 32, 0);
 
   // load and play mp3
-  // handle = FSOUND_Sample_Load(0, "my.mp3", 0, 0, 0);
+  // handle = FSOUND_Sample_Load(0, "In the Black Lake.mp3", 0, 0, 0);
   // FSOUND_PlaySound(0, handle);
 
   // wait until the users hits a key to end the app
