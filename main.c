@@ -3,8 +3,26 @@
 #include <string.h>
 #include <unistd.h> // Para o usleep()
 
+typedef struct Player
+{
+  // char name[];
+  int hp = 3;
+  int hit = 1;
+  int habilityID;
+} Player;
+
+typedef struct Enemy
+{
+  int hp;
+  int hit;
+} Enemy;
 // Definindo o atraso em microssegundos
-#define atraso 15000 
+#define atraso 15000
+
+int save()
+{
+  return 0;
+}
 
 void imprimirGradualmente(const char *texto, unsigned int microseconds)
 {
@@ -22,8 +40,16 @@ void tutorial()
   imprimirGradualmente("Digite \"ajuda\" caso queira ver este tutorial durante o jogo.\n", atraso);
 }
 
+int battle(Player *player, Enemy *enemy)
+{
+
+  return 0;
+}
 int main()
 {
+  // inimigos são alocacao dinamica
+  Player player;
+
   while (1)
   {
     tutorial();
