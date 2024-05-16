@@ -1,12 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h> // Para o usleep()
-#include <conio.h>
-// #include "inc/fmod.h"
 
-// FSOUND_SAMPLE *handle;
-
-#define atraso 15000 // milisegundos
+// Definindo o atraso em microssegundos
+#define atraso 15000 
 
 void imprimirGradualmente(const char *texto, unsigned int microseconds)
 {
@@ -26,22 +24,6 @@ void tutorial()
 
 int main()
 {
-  // init FMOD sound system
-  // FSOUND_Init(44100, 32, 0);
-
-  // load and play mp3
-  // handle = FSOUND_Sample_Load(0, "In the Black Lake.mp3", 0, 0, 0);
-  // FSOUND_PlaySound(0, handle);
-
-  // wait until the users hits a key to end the app
-  // while (!_kbhit())
-  // {
-  // }
-
-  // clean up
-  // FSOUND_Sample_Free(handle);
-  // FSOUND_Close();
-
   while (1)
   {
     tutorial();
@@ -54,20 +36,46 @@ int main()
     // Remove o caractere de nova linha (\n) no final da entrada
     entrada[strcspn(entrada, "\n")] = '\0';
 
+    // Converter entrada para minúsculas
+    for (int i = 0; entrada[i]; i++)
+    {
+      entrada[i] = tolower(entrada[i]);
+    }
+
     // Verifica se a entrada contém palavras-chave específicas
-    if (strstr(entrada, "Abrir Porta") != NULL)
+    if (strstr(entrada, "abrir porta") != NULL)
     {
       imprimirGradualmente("Comando reconhecido: Abrir Porta\n", atraso);
     }
-    else if (strstr(entrada, "Fechar Porta") != NULL)
+    else if (strstr(entrada, "fechar porta") != NULL)
     {
       imprimirGradualmente("Comando reconhecido: Fechar Porta\n", atraso);
+    }
+    else if (strstr(entrada, "jumpscare") != NULL)
+    {
+      // Abrir e imprimir o conteúdo do arquivo "jumpscaSe.txt"
+      FILE *arquivo;
+      arquivo = fopen("C:/Coding/IHNMAIMS_Demo/images/jumpscare.txt", "r");
+      if (arquivo == NULL)
+      {
+        printf("Erro ao abrir o arquivo jumpscare.txt\n");
+        return 1;
+      }
+
+      char linha[100];
+      while (fgets(linha, sizeof(linha), arquivo) != NULL)
+      {
+        printf("%s", linha);
+        usleep(atraso); // Adiciona um atraso entre cada linha para imprimir gradualmente
+      }
+
+      fclose(arquivo);
     }
     else
     {
       imprimirGradualmente("Comando não reconhecido.\n", atraso);
     }
-
-    return 0;
   }
+
+  return 0;
 }
