@@ -1,0 +1,4 @@
+Seja bem-vinde a Demo de Historias Mal Contadas, desenvolvida pela B&B Studios!
+Historias Mal Contadas eh jogo de terror do estilo RPG em terminal dos anos 90, onde o jogador se encontra numa sala misteriosa e 
+desbrava o local em busca de uma saida
+Saiba que este jogo tem muitas ideias para elaborar e muita coisa pra desenvolver

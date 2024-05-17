@@ -1,0 +1,4 @@
+abrir
+ir ate
+destrancar
+trancar
