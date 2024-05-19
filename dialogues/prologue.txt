@@ -1,13 +1,11 @@
-Você acorda com um sobressalto em uma sala cinzenta e fria. A ausência de qualquer luz natural torna o ambiente opressivamente sombrio, exceto pela luz dura e pálida de uma lâmpada fluorescente que 
-ilumina o recinto com um brilho áspero e frio. O som suave, mas constante, da eletricidade fluindo através da lâmpada preenche o silêncio, criando uma sensação de desconforto.
+---------------
+Voce acorda com um sobressalto em uma sala cinzenta e fria. A ausencia de qualquer luz natural torna o ambiente opressivamente sombrio, exceto pela luz dura e palida de uma lampada fluorescente que ilumina o recinto com um brilho aspero e frio. O som suave, mas constante, da eletricidade fluindo atraves da lampada preenche o silencio, criando uma sensacao de desconforto.
 
-O ar é pesado e tem um cheiro metálico, misturado com algo que você não consegue identificar. A sala é retangular e as paredes, feitas de concreto bruto, mostram sinais de umidade e descascamento. 
-Você não tem nenhuma memória de como veio parar aqui e a ansiedade começa a se infiltrar em seus pensamentos ao perceber que também não sabe como irá sair.
+O ar e pesado e tem um cheiro metalico, misturado com algo que voce nao consegue identificar. A sala e retangular e as paredes, feitas de concreto bruto, mostram sinais de umidade e descascamento. Voce nao tem nenhuma memoria de como veio parar aqui e a ansiedade comeca a se infiltrar em seus pensamentos ao perceber que tambem nao sabe como ira sair.
 
-Na sua frente, uma porta velha de pinheiro, desgastada pelo tempo, parece ser a única saída. A madeira está rachada e a pintura, outrora de um branco nítido, está agora amarelada e descascada, revelando as fibras escuras por baixo. 
-A maçaneta de metal oxidado brilha fracamente sob a luz fluorescente, convidando e ao mesmo tempo repelindo.
+Na sua frente, uma porta velha de pinheiro, desgastada pelo tempo, parece ser a unica saida. A madeira esta rachada e a pintura, outrora de um branco nitido, esta agora amarelada e descascada, revelando as fibras escuras por baixo. A macaneta de metal oxidado brilha fracamente sob a luz fluorescente, convidando e ao mesmo tempo repelindo.
 
-À sua esquerda, uma mesa de escritório solitária se apoia contra a parede. Feita de madeira escura e polida, ela contrasta com a aspereza do ambiente. Sobre ela, há alguns papéis amarelados pelo tempo, uma caneta de tinta preta e 
-um velho abajur que parece estar fora de uso há anos. A gaveta entreaberta da mesa revela apenas sombras do que pode estar dentro.
+A sua esquerda, uma mesa de escritorio solitaria se apoia contra a parede. Feita de madeira escura e polida, ela contrasta com a aspereza do ambiente. Sobre ela, ha alguns papeis amarelados pelo tempo, uma caneta de tinta preta e um velho abajur que parece estar fora de uso ha anos. A gaveta entreaberta da mesa revela apenas sombras do que pode estar dentro.
 
-O que você faz?
+O que voce faz?
+---------------
