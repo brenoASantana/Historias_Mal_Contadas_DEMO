@@ -22,6 +22,84 @@ Player defaultPlayer()
     return player;
 }
 
+typedef struct Enemy
+{
+    int hp;
+    int hit;
+} Enemy;
+
+Enemy *createEnemy()
+{
+    Enemy *enemy = malloc(sizeof(Enemy));
+    if (enemy == NULL)
+    {
+        // Falha na alocação de memória
+        return NULL;
+    }
+    enemy->hp = 2; // Definindo os valores iniciais para o inimigo
+    enemy->hit = 1;
+    return enemy;
+}
+
+int battle(Player *player, Enemy *enemy)
+{
+    printGradually("e entrou em uma batalha!\n", DELAY_MICROSECONDS);
+
+    while (player->hp > 0 && enemy->hp > 0)
+    {
+        // Mostrar a vida do jogador
+        printf("Sua vida: %d\n", player->hp);
+
+        // Opções de ação
+        printGradually("Escolha sua acao (ATAQUE ou BLOQUEAR): ", DELAY_MICROSECONDS);
+        char action[20];
+        fgets(action, sizeof(action), stdin);
+        action[strcspn(action, "\n")] = '\0';
+        for (int i = 0; action[i]; i++)
+        {
+            action[i] = toupper(action[i]);
+        }
+
+        if (strcmp(action, "ATAQUE") == 0)
+        {
+            // Player ataca
+            enemy->hp -= player->hit;
+            printGradually("Você atacou o inimigo!\n", DELAY_MICROSECONDS);
+        }
+        else if (strcmp(action, "BLOQUEAR") == 0)
+        {
+            // Player bloqueia
+            player->hp++;
+            printGradually("Você bloqueou o ataque do inimigo!\n", DELAY_MICROSECONDS);
+        }
+        else
+        {
+            printGradually("Acao inválida! Escolha ATAQUE ou BLOQUEAR.\n", DELAY_MICROSECONDS);
+            continue; // Volta para o início do loop para permitir uma nova escolha
+        }
+
+        // Verificar se o inimigo foi derrotado
+        if (enemy->hp <= 0)
+        {
+            printGradually("Você derrotou o inimigo!\n", DELAY_MICROSECONDS);
+            return 1; // Retorna 1 para indicar vitória
+        }
+
+        // Inimigo ataca
+        player->hp -= enemy->hit;
+        printGradually("O inimigo atacou você!\n", DELAY_MICROSECONDS);
+
+        // Verificar se o jogador foi derrotado
+        if (player->hp <= 0)
+        {
+            printGradually("Você foi derrotado!\n", DELAY_MICROSECONDS);
+            return 0; // Retorna 0 para indicar derrota
+        }
+    }
+
+    return 0; // Nunca deve chegar aqui, mas apenas para evitar warning do compilador
+}
+
 void printGradually(const char *text, unsigned int microseconds)
 {
     while (*text)
@@ -82,14 +160,34 @@ int firstRoom(Player *player)
         {
             if (doorUnlocked)
             {
-                printGradually("Voce abriu a porta e saiu da sala.\n", DELAY_MICROSECONDS);
+                printGradually("Voce abriu a porta e entrou em uma sala escura.\n", DELAY_MICROSECONDS);
+                Enemy *enemy = createEnemy();
+                if (enemy != NULL)
+                {
+                    if (battle(player, enemy))
+                    {
+                        printGradually("Voce derrotou o inimigo e encontrou a saida!\n", DELAY_MICROSECONDS);
+                        // Aqui você pode adicionar recompensas para o jogador
+                    }
+                    else
+                    {
+                        printGradually("Voce foi derrotado pelo inimigo!\n", DELAY_MICROSECONDS);
+                        // Aqui você pode adicionar consequências por perder a batalha
+                    }
+                    free(enemy); // Liberando a memória alocada para o inimigo
+                }
+                else
+                {
+                    printGradually("Erro ao criar o inimigo. Memória insuficiente.\n", DELAY_MICROSECONDS);
+                }
                 return 0;
             }
             else
             {
-                printGradually("A porta esta trancada. Voce precisa de uma chave.\n", DELAY_MICROSECONDS);
+                printGradually("A porta está trancada. Você precisa de uma chave.\n", DELAY_MICROSECONDS);
             }
         }
+
         else if (strstr(input, "IR ATE MESA") != NULL)
         {
             player->atTable = 1;
@@ -164,7 +262,7 @@ int main()
         "Bem-vindo ao jogo! (Digite AJUDA caso nao saiba os comandos)\n"
         "Deseja iniciar um novo jogo ou carregar um save? (novo/carregar): ",
         DELAY_MICROSECONDS);
-    
+
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0';
 
