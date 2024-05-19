@@ -13,7 +13,7 @@ typedef struct Player
     int hit;
     int habilityID;
     int hasKey;
-    int atTable; // Adicionado para rastrear se o jogador está na mesa
+    int atTable;
 } Player;
 
 Player defaultPlayer()
@@ -30,6 +30,34 @@ void printGradually(const char *text, unsigned int microseconds)
         fflush(stdout);
         usleep(microseconds);
     }
+}
+
+int saveGame(Player *player, const char *filename)
+{
+    FILE *file = fopen(filename, "w");
+    if (!file)
+    {
+        printGradually("Erro ao salvar o jogo.\n", DELAY_MICROSECONDS);
+        return 1;
+    }
+    fprintf(file, "%d %d %d %d %d\n", player->hp, player->hit, player->habilityID, player->hasKey, player->atTable);
+    fclose(file);
+    printGradually("Jogo salvo com sucesso.\n", DELAY_MICROSECONDS);
+    return 0;
+}
+
+int loadGame(Player *player, const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (!file)
+    {
+        printGradually("Erro ao carregar o jogo salvo.\n", DELAY_MICROSECONDS);
+        return 1;
+    }
+    fscanf(file, "%d %d %d %d %d", &player->hp, &player->hit, &player->habilityID, &player->hasKey, &player->atTable);
+    fclose(file);
+    printGradually("Jogo carregado com sucesso.\n", DELAY_MICROSECONDS);
+    return 0;
 }
 
 int firstRoom(Player *player)
@@ -98,6 +126,15 @@ int firstRoom(Player *player)
                 printGradually("Voce nao tem a chave para destrancar a porta.\n", DELAY_MICROSECONDS);
             }
         }
+        else if (strstr(input, "SALVAR") != NULL)
+        {
+            saveGame(player, "savegame.txt");
+        }
+        else if (strstr(input, "SAIR") != NULL)
+        {
+            printGradually("Saindo do jogo...\n", DELAY_MICROSECONDS);
+            exit(0);
+        }
         else if (strstr(input, "AJUDA") != NULL)
         {
             printGradually(
@@ -106,6 +143,8 @@ int firstRoom(Player *player)
                 "- IR ATE MESA: Vai ate a mesa.\n"
                 "- PEGAR CHAVE: Pega a chave na mesa (precisa estar perto).\n"
                 "- DESTRANCAR PORTA: Destranca a porta (se voce tiver a chave).\n"
+                "- SALVAR: Salva o jogo.\n"
+                "- SAIR: Sai do jogo.\n"
                 "- AJUDA: Mostra esta mensagem de ajuda.\n",
                 DELAY_MICROSECONDS);
         }
@@ -119,11 +158,28 @@ int firstRoom(Player *player)
 int main()
 {
     Player player = defaultPlayer();
+    char input[10];
 
     printGradually(
         "Bem-vindo ao jogo! (Digite AJUDA caso nao saiba os comandos)\n"
-        "Voce esta em uma sala. Veja se consegue sair.\n",
+        "Deseja iniciar um novo jogo ou carregar um save? (novo/carregar): ",
         DELAY_MICROSECONDS);
+    
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+
+    if (strcasecmp(input, "carregar") == 0)
+    {
+        if (loadGame(&player, "savegame.txt") != 0)
+        {
+            printGradually("Falha ao carregar o save. Iniciando um novo jogo.\n", DELAY_MICROSECONDS);
+            player = defaultPlayer();
+        }
+    }
+    else
+    {
+        player = defaultPlayer();
+    }
 
     firstRoom(&player);
 
