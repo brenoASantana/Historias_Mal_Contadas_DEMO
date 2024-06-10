@@ -1,5 +1,6 @@
 #include "raylib.h"
-#include "text.h"
+#include "../include/text.h"
+#include "text.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,12 +17,12 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO"); // Inicializa a janela com o título especificado
     InitAudioDevice();
 
-    Music music = LoadMusicStream("assets/musics/a_warning_before_reading.mp3");
+    Music music = LoadMusicStream("../assets/musics/a_warning_before_reading.mp3");
     PlayMusicStream(music);
 
     SetTargetFPS(60); // Define a taxa de quadros alvo para 60 FPS
 
-    char *prologueText = ReadTextFile("assets/texts/prologue.txt");
+    char *prologueText = ReadTextFile("../assets/texts/prologue.txt");
     int charCount = 0;
     float alpha = 0.0f;
     TextState state = FADE_IN;

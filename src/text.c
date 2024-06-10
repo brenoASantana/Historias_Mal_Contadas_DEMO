@@ -1,4 +1,4 @@
-#include "text.h"
+#include "../include/text.h"
 
 char *ReadTextFile(const char *filename)
 {
