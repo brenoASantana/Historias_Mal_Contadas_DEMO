@@ -1,4 +1,4 @@
-Você acorda abruptamente em uma sala cinzenta e gélida. 
+Você acorda abruptamente em uma sala cinzenta e gélida.
 A falta de luz natural torna o ambiente opressivamente sombrio,
 exceto pela luz dura e pálida de uma lâmpada fluorescente que ilumina
 o recinto com um brilho áspero e frio. O som suave, porém constante,
@@ -8,15 +8,15 @@ criando uma sensação de desconforto.
 O ar é pesado e tem um odor metálico, mesclado com algo indistinto.
 A sala é retangular, com paredes de concreto bruto mostrando sinais de
 umidade e descamação. Você não tem nenhuma memória de como veio parar
-aqui e a ansiedade começa a permear seus pensamentos ao perceber que também
-não sabe como irá sair.
+aqui e a ansiedade começa a permear seus pensamentos ao perceber que 
+também não sabe como irá sair.
 
 À sua frente, uma porta antiga de pinho, desgastada pelo tempo, parece ser a única saída.
 A madeira está rachada e a pintura, outrora nítida em branco, agora está amarelada e descascada,
 revelando as fibras escuras por baixo. A maçaneta de metal oxidado brilha fracamente sob a luz fluorescente,
 convidando e ao mesmo tempo repelindo.
 
-À sua esquerda, uma mesa de escritório solitária se apoia contra a parede. Feita de madeira escura e polida,
+À sua esquerda, a mesa de escritório solitária se apoia contra a parede. Feita de madeira escura e polida,
 contrasta com a aspereza do ambiente. Sobre ela, há alguns papéis amarelados pelo tempo,
 uma caneta de tinta preta e um velho abajur que parece estar fora de uso há anos.
 A gaveta entreaberta da mesa revela apenas sombras do que pode estar dentro.

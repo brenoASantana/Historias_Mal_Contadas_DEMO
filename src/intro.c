@@ -13,8 +13,8 @@ void IntroInit(void)
     music = LoadMusicStream("../assets/musics/in_the_black_lake.mp3");
     PlayMusicStream(music);
 
-    fileText1 = ReadTextFile("../assets/texts/intro1.txt");
-    fileText2 = ReadTextFile("../assets/texts/intro2.txt");
+    fileText1 = ReadTextFile("../assets/texts/studio.txt");
+    fileText2 = ReadTextFile("../assets/texts/title.txt");
 
     if (!fileText1 || !fileText2) {
         printf("Failed to read one of the intro files.\n");
@@ -32,14 +32,10 @@ void IntroUpdate(void)
 
 void IntroDraw(void)
 {
-    DrawText("F11 para Tela Cheia", 10, 10, 20, GREEN);
-    DrawText("ESC para Sair", 10, 40, 20, GREEN);
-    DrawFPS(10, 70);
-
-    DrawTextWithDelay(fileText1, 10, 100, 20, GREEN, &charCount1, 1);
+    DrawTextWithDelay(fileText1, 10, 100, 60, GREEN, &charCount1, 1);
     if (charCount1 >= strlen(fileText1))
     {
-        DrawTextWithDelay(fileText2, 10, 200, 20, GREEN, &charCount2, 1);
+        DrawTextWithDelay(fileText2, 10, 200, 60, GREEN, &charCount2, 1);
     }
 
     if (IsKeyPressed(KEY_F11)) {
