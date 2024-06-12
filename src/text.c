@@ -17,66 +17,19 @@ char *ReadTextFile(const char *filename)
     {
         fread(buffer, 1, length, file); // Lê o conteúdo do arquivo para o buffer
         buffer[length] = '\0';          // Adiciona um terminador nulo ao final da string
-        
-        // Substitui todos os pontos de interrogação por pontos finais
-        for (int i = 0; i < length; i++)
-        {
-            if (buffer[i] == '?')
-                buffer[i] = '.';
-        }
     }
 
     fclose(file);  // Fecha o arquivo
     return buffer; // Retorna o buffer contendo o conteúdo do arquivo
 }
 
-void DrawTextWithFade(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, float *alpha, TextState *state)
+void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, int textSpeed)
 {
     int length = strlen(text);
-    Color color = baseColor;
-    color.a = (unsigned char)(*alpha * 255);
-
-    switch (*state)
+    if (*charCount < length)
     {
-        case FADE_IN:
-            *alpha += FADE_SPEED;
-            if (*alpha >= 1.0f)
-            {
-                *alpha = 1.0f;
-                *state = FULL_DISPLAY;
-            }
-            break;
-        case FULL_DISPLAY:
-            if (*charCount < length)
-            {
-                char nextChar = text[*charCount];
-                if (nextChar == '?')
-                {
-                    DrawText(".", x + MeasureText(TextSubtext(text, 0, *charCount), fontSize), y, fontSize, color);
-                    (*charCount)++;
-                }
-                else
-                {
-                    DrawText(TextSubtext(text, 0, *charCount + 1), x, y, fontSize, color);
-                    (*charCount)++;
-                }
-            }
-            else
-            {
-                DrawText(text, x, y, fontSize, color);
-            }
-            *state = FADE_OUT;
-            break;
-        case FADE_OUT:
-            *alpha -= FADE_SPEED;
-            if (*alpha <= 0.0f)
-            {
-                *alpha = 0.0f;
-                *state = FADE_IN;
-                *charCount = 0; // Reinicia a contagem de caracteres
-            }
-            break;
+        *charCount += textSpeed;
     }
 
-    DrawText(TextSubtext(text, 0, *charCount + 1), x, y, fontSize, color);
+    DrawText(TextSubtext(text, 0, *charCount), x, y, fontSize, baseColor);
 }

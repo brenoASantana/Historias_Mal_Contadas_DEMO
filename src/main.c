@@ -1,60 +1,87 @@
 #include "raylib.h"
 #include "../include/text.h"
+#include "../include/levelOne.h"
+#include "../include/levelTwo.h"
+#include "../include/intro.h"//os .h estão sendo inuteis pois não consigo puxar nada deles, somente pelo .c
 #include "text.c"
+#include "intro.c"
+#include "levelOne.c"
+#include "levelTwo.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#define TEXT_SPEED 5
-#define FADE_SPEED 0.01f
 
 int main(void)
 {
     const int screenWidth = 800;
     const int screenHeight = 600;
 
-    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO"); // Inicializa a janela com o título especificado
+    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
     InitAudioDevice();
+    SetTargetFPS(60);
 
-    Music music = LoadMusicStream("../assets/musics/a_warning_before_reading.mp3");
-    PlayMusicStream(music);
-
-    SetTargetFPS(60); // Define a taxa de quadros alvo para 60 FPS
-
-    char *prologueText = ReadTextFile("../assets/texts/prologue.txt");
-    int charCount = 0;
-    float alpha = 0.0f;
-    TextState state = FADE_IN;
-
-    if (!prologueText) // Verifica se o conteúdo do arquivo foi lido com sucesso
-    {
-        CloseAudioDevice();
-        CloseWindow();
-        printf("Failed to read the file.\n");
-        return 1;
-    }
+    int currentLevel = 0; // Começa na introdução
 
     while (!WindowShouldClose()) // Loop principal do programa, continua enquanto a janela não for fechada
     {
-        UpdateMusicStream(music);
+        if (currentLevel == 0) {
+            IntroInit();
+            while (currentLevel == 0 && !WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(BLACK);
 
-        if (IsKeyPressed(KEY_F11)) // Verifica se a tecla F11 foi pressionada para alternar entre tela cheia e janela
-        {
-            ToggleFullscreen(); // Alterna entre tela cheia e janela
+                IntroUpdate();
+                IntroDraw();
+
+                if (IsKeyPressed(KEY_ENTER)) { // condição para passar para o próximo nível
+                    currentLevel = 1;
+                    IntroUnload();
+                }
+
+                EndDrawing();
+            }
         }
-        BeginDrawing();
-        ClearBackground(BLACK);
+        
+        if (currentLevel == 1) {
+            LevelOneInit();
+            while (currentLevel == 1 && !WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(BLACK);
+                
+                LevelOneUpdate();
+                LevelOneDraw();
+                
+                if (IsKeyPressed(KEY_ENTER)) { // condição para passar de nível
+                    currentLevel++;
+                    LevelOneUnload();
+                }
 
-        DrawTextWithFade(prologueText, 10, 10, 20, GREEN, &charCount, &alpha, &state);
+                EndDrawing();
+            }
+        }
+        
+        if (currentLevel == 2) {
+            LevelTwoInit();
+            while (currentLevel == 2 && !WindowShouldClose()) {
+                BeginDrawing();
+                ClearBackground(BLACK);
 
-        EndDrawing();
+                LevelTwoUpdate();
+                LevelTwoDraw();
+
+                if (IsKeyPressed(KEY_ENTER)) { // condição para passar de nível
+                    currentLevel++;
+                    LevelTwoUnload();
+                }
+
+                EndDrawing();
+            }
+        }
     }
 
-    free(prologueText); // Libera a memória alocada para o texto do prólogo
-    UnloadMusicStream(music);
     CloseAudioDevice();
     CloseWindow();
 
-    return 0; // Retorna 0 indicando que o programa foi executado com sucesso
+    return 0;
 }
