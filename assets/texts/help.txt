@@ -1,0 +1,9 @@
+Comandos disponíveis:
+- IR ATE PORTA: Vai até a porta.
+- ABRIR PORTA: Tenta abrir a porta.
+- IR ATE MESA: Vai até a mesa.
+- PEGAR CHAVE: Pega a chave na mesa (precisa estar perto).
+- DESTRANCAR PORTA: Destranca a porta (se você tiver a chave).
+- AJUDA: Mostra esta mensagem de ajuda.
+
+O que você faz?

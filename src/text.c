@@ -1,4 +1,10 @@
 #include "../include/text.h"
+#include <string.h>
+#include <ctype.h> // Adicionado para usar a função toupper
+
+char inputText[256] = "\0"; // Buffer para armazenar o texto digitado
+int letterCount = 0; // Contador de caracteres
+bool enterPressed = false; // Flag para verificar se Enter foi pressionado
 
 // Função para ler o conteúdo de um arquivo de texto
 char *ReadTextFile(const char *filename)
@@ -72,5 +78,35 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     {
         buffer[bufferIndex] = '\0'; // Adiciona um terminador nulo ao final do buffer
         DrawText(buffer, x, posY, fontSize, baseColor); // Desenha o texto restante
+    }
+}
+
+void GetUserInput(char *buffer, int maxLength, int *count)
+{
+    int key = GetCharPressed();
+    while (key > 0)
+    {
+        if ((key >= 32) && (key <= 125) && (*count < (maxLength - 1)))
+        {
+            buffer[*count] = toupper((char)key); // Converte para maiúsculo antes de adicionar ao buffer
+            buffer[*count + 1] = '\0'; // Adiciona o caractere nulo
+            (*count)++;
+        }
+
+        key = GetCharPressed(); // Verifique se mais teclas foram pressionadas
+    }
+
+    if (IsKeyPressed(KEY_BACKSPACE))
+    {
+        if (*count > 0)
+        {
+            (*count)--;
+            buffer[*count] = '\0'; // Adicione o caractere nulo
+        }
+    }
+
+    if (IsKeyPressed(KEY_ENTER))
+    {
+        enterPressed = true; // Define a flag para indicar que Enter foi pressionado
     }
 }

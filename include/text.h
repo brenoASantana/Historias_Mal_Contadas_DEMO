@@ -8,5 +8,6 @@
 
 char *ReadTextFile(const char *filename);
 void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, int textSpeed);
+void GetUserInput(char *buffer, int maxLength, int *count);
 
 #endif // TEXT_H
