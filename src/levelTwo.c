@@ -5,7 +5,7 @@ static Music music;
 
 void LevelTwoInit(void)
 {
-    music = LoadMusicStream("../assets/musics/woodland_shadows.mp3");
+    music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
     PlayMusicStream(music);
 }
 

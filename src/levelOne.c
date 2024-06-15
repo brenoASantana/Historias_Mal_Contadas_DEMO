@@ -13,7 +13,8 @@ int isDoorOpen = 1;
 
 void LevelOneInit(void)
 {
-    music = LoadMusicStream("../assets/musics/a_warning_before_reading.mp3");
+    music = LoadMusicStream("../assets/sounds/musics/a_warning_before_reading.mp3");
+    SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
 
     const char *filePath = "../assets/texts/prologue.txt";
