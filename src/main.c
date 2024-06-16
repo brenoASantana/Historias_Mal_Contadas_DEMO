@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "../include/text.h"
 #include "../include/levelOne.h"
-#include "../include/levelTwo.h"//os .h estão sendo inuteis pois não consigo puxar nada deles, somente pelo .c
+#include "../include/levelTwo.h"
 #include "text.c"
 #include "levelOne.c"
 #include "levelTwo.c"
@@ -39,7 +39,7 @@ int main(void)
                     LevelOneUpdate();
                     LevelOneDraw();
                     
-                    if (isDoorOpen == 0) { // Player conseguiu abrir a porta do level 1
+                    if (isDoorOpen == 1) { // Player conseguiu abrir a porta do level 1
                         currentLevel++;
                         LevelOneUnload();
                     }

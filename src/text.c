@@ -1,5 +1,4 @@
 #include "../include/text.h"
-#include <string.h>
 #include <ctype.h> // Adicionado para usar a função toupper
 
 char inputText[256] = "\0"; // Buffer para armazenar o texto digitado
@@ -39,7 +38,7 @@ char *ReadTextFile(const char *filename)
 
 // Função para desenhar texto com delay, considerando quebra de linha ao pressionar "Enter"
 void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, int textSpeed)
-{   
+{
     int length = strlen(text); // Calcula o comprimento total do texto
     if (*charCount < length)
     {
@@ -52,19 +51,14 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     int bufferIndex = 0; // Índice do buffer
 
     // Loop através do texto até o contador de caracteres
-    for (int i = 0; i < *charCount; i++)
+    for (int i = 0; i < *charCount && i < length; i++)
     {
         // Verifica se o caractere atual é uma quebra de linha ou se o buffer atingiu seu limite
         if (text[i] == '\n' || bufferIndex >= sizeof(buffer) - 1)
         {
             buffer[bufferIndex] = '\0'; // Adiciona um terminador nulo ao final do buffer
             DrawText(buffer, x, posY, fontSize, baseColor); // Desenha o texto atual no buffer
-
-            // Move para a próxima linha se o caractere atual for uma quebra de linha
-            if (text[i] == '\n') {
-                posY += lineHeight; // Move para a próxima linha
-            }
-
+            posY += lineHeight; // Move para a próxima linha
             bufferIndex = 0; // Reinicia o índice do buffer para o próximo texto
         }
         else
@@ -81,6 +75,7 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     }
 }
 
+
 void GetUserInput(char *buffer, int maxLength, int *count)
 {
     int key = GetCharPressed();
@@ -89,11 +84,11 @@ void GetUserInput(char *buffer, int maxLength, int *count)
         if ((key >= 32) && (key <= 125) && (*count < (maxLength - 1)))
         {
             buffer[*count] = toupper((char)key); // Converte para maiúsculo antes de adicionar ao buffer
-            buffer[*count + 1] = '\0'; // Adiciona o caractere nulo
             (*count)++;
+            buffer[*count] = '\0'; // Adiciona o caractere nulo
         }
 
-        key = GetCharPressed(); // Verifique se mais teclas foram pressionadas
+        key = GetCharPressed(); // Verifica se mais teclas foram pressionadas
     }
 
     if (IsKeyPressed(KEY_BACKSPACE))
@@ -101,7 +96,7 @@ void GetUserInput(char *buffer, int maxLength, int *count)
         if (*count > 0)
         {
             (*count)--;
-            buffer[*count] = '\0'; // Adicione o caractere nulo
+            buffer[*count] = '\0'; // Adiciona o caractere nulo
         }
     }
 
@@ -110,3 +105,4 @@ void GetUserInput(char *buffer, int maxLength, int *count)
         enterPressed = true; // Define a flag para indicar que Enter foi pressionado
     }
 }
+
