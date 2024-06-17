@@ -10,23 +10,34 @@
 #include <string.h>
 #include <unistd.h>
 
+void InitWindowWithResponsiveResolution() {
+    // Inicializa a janela com uma resolução padrão (800x600)
+    InitWindow(800, 600, "Histórias Mal Contadas DEMO");
+    
+    // Obtém a resolução do monitor principal (0)
+    int screenWidth = GetMonitorWidth(0);
+    int screenHeight = GetMonitorHeight(0);
+
+    // Ajusta a janela para a resolução do monitor em tela cheia
+    SetWindowSize(screenWidth, screenHeight);
+    
+    // Alterna para tela cheia
+    ToggleFullscreen();
+    SetTargetFPS(60);
+}
+
 int main(void)
 {
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
-
-    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
+  // Inicializa a janela com resolução responsiva
+    InitWindowWithResponsiveResolution();
+    
     InitAudioDevice();
-    SetTargetFPS(60);
 
     int currentLevel = 1; // Começa na introdução
  
     while (!WindowShouldClose()) // Loop principal do programa, continua enquanto a janela não for fechada
     {
-        if (IsKeyPressed(KEY_F11)) {
-            ToggleFullscreen();
-        }
-
+      
         switch (currentLevel)
         {
             case 1:

@@ -17,8 +17,8 @@ void LevelOneInit(void)
 {
     //tres opcoes de musica nas quais fiquei confuso de qual escolher :P
     //music = LoadMusicStream("../assets/sounds/musics/a_warning_before_reading.mp3");
-    music = LoadMusicStream("../assets/sounds/musics/in_the_black_lake.mp3");
-    //music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
+    //music = LoadMusicStream("../assets/sounds/musics/in_the_black_lake.mp3");
+    music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
 
