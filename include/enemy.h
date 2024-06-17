@@ -3,7 +3,8 @@
 
 #include "raylib.h"
 
-typedef struct Enemy {
+typedef struct Enemy
+{
     Vector2 position;
     Texture2D texture;
     int health;

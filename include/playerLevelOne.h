@@ -3,7 +3,8 @@
 
 #include "raylib.h"
 
-typedef struct PlayerLevelOne {
+typedef struct PlayerLevelOne
+{
     int position;
     bool hasKey;
 } PlayerLevelOne;

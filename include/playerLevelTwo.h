@@ -3,7 +3,8 @@
 
 #include "raylib.h"
 
-typedef struct PlayerLevelTwo {
+typedef struct PlayerLevelTwo
+{
     Vector2 position;
     Texture2D texture;
     int hp;

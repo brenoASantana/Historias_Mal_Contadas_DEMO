@@ -19,32 +19,18 @@ void InitWindowWithResponsiveResolution()
     screenHeight = 600;
 
     // Initialize window with default resolution
-    if (!InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO"))
-    {
-        printf("Failed to initialize window.\n");
-        exit(1);
-    }
+    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
 
     // Get half of the monitor resolution
     int monitorIndex = 0;
     int monitorWidth = GetMonitorWidth(monitorIndex);
     int monitorHeight = GetMonitorHeight(monitorIndex);
 
-    // Check if monitor resolution is valid
-    if (monitorWidth == 0 || monitorHeight == 0)
-    {
-        printf("Failed to get monitor resolution.\n");
-        exit(1);
-    }
-
     // Adjust window size to monitor resolution
     screenWidth = monitorWidth / 2;
     screenHeight = monitorHeight / 2;
-    if (!SetWindowSize(screenWidth, screenHeight))
-    {
-        printf("Failed to set window size.\n");
-        exit(1);
-    }
+
+    SetWindowSize(screenWidth, screenHeight);
 
     // Set target frames per second
     SetTargetFPS(60);
@@ -53,11 +39,7 @@ void InitWindowWithResponsiveResolution()
 int main(void)
 {
     // Inicializa a janela com resolução responsiva
-    if (!InitWindowWithResponsiveResolution())
-    {
-        printf("Failed to initialize window.\n");
-        return 1;
-    }
+    InitWindowWithResponsiveResolution();
 
     InitAudioDevice();
 
@@ -67,23 +49,17 @@ int main(void)
     {
         switch (currentLevel)
         {
-            
+
         case 1:
-            if (!LevelOneInit())
-            {
-                printf("Failed to initialize level one.\n");
-                return 1;
-            }
+            LevelOneInit();
+
             while (currentLevel == 1 && !WindowShouldClose())
             {
                 BeginDrawing();
                 ClearBackground(BLACK);
 
-                if (!LevelOneUpdate() || !LevelOneDraw())
-                {
-                    printf("Failed to update or draw level one.\n");
-                    return 1;
-                }
+                LevelOneUpdate();
+                LevelOneDraw();
 
                 if (isDoorOpen)
                 { // Player conseguiu abrir a porta do level 1
@@ -97,21 +73,15 @@ int main(void)
             break;
 
         case 2:
-            if (!LevelTwoInit())
-            {
-                printf("Failed to initialize level two.\n");
-                return 1;
-            }
+            LevelTwoInit();
+
             while (currentLevel == 2 && !WindowShouldClose())
             {
                 BeginDrawing();
                 ClearBackground(BLACK);
 
-                if (!LevelTwoUpdate() || !LevelTwoDraw())
-                {
-                    printf("Failed to update or draw level two.\n");
-                    return 1;
-                }
+                LevelTwoUpdate();
+                LevelTwoDraw();
 
                 EndDrawing();
             }

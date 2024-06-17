@@ -22,55 +22,31 @@ void LevelOneInit(void)
 
     // Check if music file exists
     const char *musicFilePath = "../assets/sounds/musics/woodland_shadows.mp3";
-    if (access(musicFilePath, F_OK) != 0) {
-        printf("Failed to open music file.\n");
-        return;
-    }
 
     music = LoadMusicStream(musicFilePath);
-    if (!music) {
-        printf("Failed to load music stream.\n");
-        return;
-    }
 
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
 
     // Check if text file exists
     const char *filePath = "../assets/texts/prologue.txt";
-    if (access(filePath, F_OK) != 0) {
-        printf("Failed to open text file.\n");
-        UnloadMusicStream(music);
-        return;
-    }
-
     fileText = ReadTextFile(filePath);
-    if (!fileText) {
-        printf("Failed to read the file.\n");
-        UnloadMusicStream(music);
-        return;
-    }
 
     charCount = 0;
 }
 
 void LevelOneUpdate(void)
 {
-    if (music == NULL || fileText == NULL || inputText == NULL) {
-        printf("Null pointer references in LevelOneUpdate.\n");
-        return;
-    }
-
     UpdateMusicStream(music);
 
     if (!enterPressed)
     {
-        DrawTextWithDelay(fileText, 10, 90, 20, GREEN, &charCount, 1);
+        DrawTextWithDelay(fileText, 10, 10, 20, GREEN, &charCount, 1);
         GetUserInput(inputText, 256, &letterCount);
 
         // Desenha o texto digitado pelo usuário em tempo real
-        DrawText(">", 10, GetScreenHeight()-30, 20, GREEN);
-        DrawText(inputText, 20, GetScreenHeight()-30, 20, GREEN);
+        DrawText(">", 10, GetScreenHeight() - 30, 20, GREEN);
+        DrawText(inputText, 20, GetScreenHeight() - 30, 20, GREEN);
 
         if (IsKeyPressed(KEY_ENTER))
         {
@@ -95,17 +71,9 @@ void LevelOneDraw(void)
         // Check if GetScreenWidth() and GetScreenHeight() return non-zero values
         int screenWidth = GetScreenWidth() * 2;
         int screenHeight = GetScreenHeight() * 2;
-        if (screenWidth == 0 || screenHeight == 0)
-        {
-            printf("Failed to get screen resolution.\n");
-            return;
-        }
 
-        if (!SetWindowSize(screenWidth, screenHeight))
-        {
-            printf("Failed to set window size.\n");
-            return;
-        }
+        SetWindowSize(screenWidth, screenHeight);
+
         ToggleFullscreen();
     }
 
@@ -115,132 +83,135 @@ void LevelOneDraw(void)
 
 void AnalyzeInput(char *inputText)
 {
-    if (inputText == NULL) {
-        printf("Input text is NULL.\n");
-        return;
-    }
 
-    for (int i = 0; inputText[i]; i++) {
+    for (int i = 0; inputText[i]; i++)
+    {
         inputText[i] = toupper(inputText[i]);
     }
 
-    if (strcmp(inputText, "IR ATE PORTA") == 0) {
+    if (strcmp(inputText, "IR ATE PORTA") == 0)
+    {
         const char *newFilePath = "../assets/texts/goToDoor.txt";
-        if (fileText != NULL) {
+        if (fileText != NULL)
+        {
             free(fileText);
         }
         fileText = ReadTextFile(newFilePath);
-        if (fileText == NULL) {
-            printf("Failed to read the file.\n");
-            return;
-        }
+
         charCount = 0;
         player.position = 1; // Player está perto da porta
-    } else if (strcmp(inputText, "IR ATE MESA") == 0) {
+    }
+    else if (strcmp(inputText, "IR ATE MESA") == 0)
+    {
         const char *newFilePath = "../assets/texts/goToTable.txt";
-        if (fileText != NULL) {
+        if (fileText != NULL)
+        {
             free(fileText);
         }
         fileText = ReadTextFile(newFilePath);
-        if (fileText == NULL) {
-            printf("Failed to read the file.\n");
-            return;
-        }
+
         charCount = 0;
         player.position = 2; // Player está perto da mesa
-    } else if (strcmp(inputText, "PEGAR CHAVE") == 0) {
-        if (player.position == 2 && !player.hasKey) {
+    }
+    else if (strcmp(inputText, "PEGAR CHAVE") == 0)
+    {
+        if (player.position == 2 && !player.hasKey)
+        {
             const char *newFilePath = "../assets/texts/takeKey.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
             player.hasKey = true;
-        } else {
+        }
+        else
+        {
             const char *newFilePath = "../assets/texts/cannotTakeKey.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
         }
-    } else if (strcmp(inputText, "DESTRANCAR PORTA") == 0) {
-        if (player.position == 1 && player.hasKey && doorLocked) {
+    }
+    else if (strcmp(inputText, "DESTRANCAR PORTA") == 0)
+    {
+        if (player.position == 1 && player.hasKey && doorLocked)
+        {
             const char *newFilePath = "../assets/texts/unlockDoorWithKey.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
             doorLocked = false;
-        } else {
+        }
+        else
+        {
             const char *newFilePath = "../assets/texts/cannotUnlockDoor.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
         }
-    } else if (strcmp(inputText, "ABRIR PORTA") == 0) {
-        if (player.position == 1 && !doorLocked && !isDoorOpen) {
+    }
+    else if (strcmp(inputText, "ABRIR PORTA") == 0)
+    {
+        if (player.position == 1 && !doorLocked && !isDoorOpen)
+        {
             const char *newFilePath = "../assets/texts/openUnlockedDoor.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
             isDoorOpen = true;
-        } else if (player.position == 1 && doorLocked) {
+        }
+        else if (player.position == 1 && doorLocked)
+        {
             const char *newFilePath = "../assets/texts/openLockedDoor.txt";
-            if (fileText != NULL) {
+            if (fileText != NULL)
+            {
                 free(fileText);
             }
             fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
-            charCount = 0;
-        } else {
-            const char *newFilePath = "../assets/texts/cannotOpenDoor.txt";
-            if (fileText != NULL) {
-                free(fileText);
-            }
-            fileText = ReadTextFile(newFilePath);
-            if (fileText == NULL) {
-                printf("Failed to read the file.\n");
-                return;
-            }
+
             charCount = 0;
         }
-    } else {
+        else
+        {
+            const char *newFilePath = "../assets/texts/cannotOpenDoor.txt";
+            if (fileText != NULL)
+            {
+                free(fileText);
+            }
+            fileText = ReadTextFile(newFilePath);
+
+            charCount = 0;
+        }
+    }
+    else
+    {
         const char *newFilePath = "../assets/texts/unknow.txt";
-        if (fileText != NULL) {
+        if (fileText != NULL)
+        {
             free(fileText);
         }
         fileText = ReadTextFile(newFilePath);
-        if (fileText == NULL) {
+        if (fileText == NULL)
+        {
             printf("Failed to read the file.\n");
             return;
         }
@@ -250,10 +221,9 @@ void AnalyzeInput(char *inputText)
 
 void LevelOneUnload(void)
 {
-    if (fileText != NULL) {
+    if (fileText != NULL)
+    {
         free(fileText);
     }
-    if (music != NULL) {
-        UnloadMusicStream(music);
-    }
+    UnloadMusicStream(music);
 }

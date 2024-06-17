@@ -3,17 +3,12 @@
 #include <ctype.h> // Adicionado para usar a função toupper
 
 char inputText[256] = "\0"; // Buffer para armazenar o texto digitado
-int letterCount = 0; // Contador de caracteres
-bool enterPressed = false; // Flag para verificar se Enter foi pressionado
+int letterCount = 0;        // Contador de caracteres
+bool enterPressed = false;  // Flag para verificar se Enter foi pressionado
 
 // Função para ler o conteúdo de um arquivo de texto
 char *ReadTextFile(const char *filename)
 {
-    // Verifica se o arquivo existe antes de abrir
-    if (!filename || !fileExists(filename))
-    {
-        return NULL;
-    }
 
     // Abre o arquivo para leitura de texto
     FILE *file = fopen(filename, "r");
@@ -46,30 +41,16 @@ char *ReadTextFile(const char *filename)
 
     buffer[length] = '\0'; // Adiciona um terminador nulo ao final da string
 
-    fclose(file);  // Fecha o arquivo
+    fclose(file); // Fecha o arquivo
 
     return buffer; // Retorna o buffer contendo o conteúdo do arquivo
-}
-
-// Função para verificar se um arquivo existe
-bool fileExists(const char *filename)
-{
-    FILE *file = fopen(filename, "r");
-    if (file)
-    {
-        fclose(file);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
 }
 
 // Função para desenhar texto com delay, considerando quebra de linha ao pressionar "Enter"
 void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, int textSpeed)
 {
-    if (text == NULL || charCount == NULL) {
+    if (text == NULL || charCount == NULL)
+    {
         return;
     }
 
@@ -79,11 +60,11 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
         *charCount += textSpeed; // Incrementa o contador de caracteres com base na velocidade de desenho
     }
 
-    int posX = x; // Define a posição X inicial
-    int posY = y; // Define a posição Y inicial
+    int posX = x;                  // Define a posição X inicial
+    int posY = y;                  // Define a posição Y inicial
     int lineHeight = fontSize + 2; // Define a altura da linha, ajustável conforme necessário
-    char buffer[256]; // Cria um buffer temporário para armazenar as linhas de texto
-    int bufferIndex = 0; // Índice do buffer
+    char buffer[256];              // Cria um buffer temporário para armazenar as linhas de texto
+    int bufferIndex = 0;           // Índice do buffer
 
     // Define o limite da tela
     int screenWidthLimit = GetScreenWidth() - 40;
@@ -94,16 +75,16 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
         // Verifica se o caractere atual é uma quebra de linha ou se o buffer atingiu seu limite
         if (text[i] == '\n' || bufferIndex >= sizeof(buffer) - 1)
         {
-            buffer[bufferIndex] = '\0'; // Adiciona um terminador nulo ao final do buffer
+            buffer[bufferIndex] = '\0';                        // Adiciona um terminador nulo ao final do buffer
             DrawText(buffer, posX, posY, fontSize, baseColor); // Desenha o texto atual no buffer
-            posY += lineHeight; // Move para a próxima linha
-            bufferIndex = 0; // Reinicia o índice do buffer para o próximo texto
-             // Verifica se atingiu o limite da tela na posição X
+            posY += lineHeight;                                // Move para a próxima linha
+            bufferIndex = 0;                                   // Reinicia o índice do buffer para o próximo texto
+                                                               // Verifica se atingiu o limite da tela na posição X
             if (posX + 40 > screenWidthLimit)
             {
-                posX = x; // Reinicia a posição X
+                posX = x;   // Reinicia a posição X
                 posY += 10; // Avança a posição Y para a próxima linha
-                break; // Para de desenhar se atingir o limite da tela na posição X
+                break;      // Para de desenhar se atingir o limite da tela na posição X
             }
         }
         else
@@ -115,14 +96,15 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     // Desenha a última linha, se houver texto restante
     if (bufferIndex > 0)
     {
-        buffer[bufferIndex] = '\0'; // Adiciona um terminador nulo ao final do buffer
+        buffer[bufferIndex] = '\0';                        // Adiciona um terminador nulo ao final do buffer
         DrawText(buffer, posX, posY, fontSize, baseColor); // Desenha o texto restante
     }
 }
 
 void GetUserInput(char *buffer, int maxLength, int *count)
 {
-    if (buffer == NULL || count == NULL) {
+    if (buffer == NULL || count == NULL)
+    {
         return;
     }
 
