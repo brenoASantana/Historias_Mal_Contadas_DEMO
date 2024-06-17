@@ -7,11 +7,13 @@
 static char *fileText = NULL;
 static int charCount = 0;
 static Music music;
-int doorLocked = 1;
-int isWithKey = 0;
-int isDoorOpen = 0;
+bool doorLocked = true;
+bool isWithKey = false;
+bool isDoorOpen = false;
 bool isNearDoor = false;
 bool isNearTable = false;
+int lastXPosition = 10;
+int lastYPosition = 10;
 
 void LevelOneInit(void)
 {
@@ -42,8 +44,8 @@ void LevelOneUpdate(void)
         GetUserInput(inputText, 256, &letterCount);
 
         // Desenha o texto digitado pelo usuário em tempo real
-        DrawText(">", 10, 700, 20, GREEN);
-        DrawText(inputText, 20, 700, 20, GREEN);
+        DrawText(">", 10, GetScreenHeight()-30, 20, GREEN);
+        DrawText(inputText, 20, GetScreenHeight()-30, 20, GREEN);
 
         if (IsKeyPressed(KEY_ENTER))
         {
@@ -54,7 +56,6 @@ void LevelOneUpdate(void)
     else
     {
         ClearBackground(BLACK);
-        // Desenhar qualquer coisa adicional aqui se necessário
 
         enterPressed = false;
         letterCount = 0;
@@ -65,11 +66,18 @@ void LevelOneUpdate(void)
 void LevelOneDraw(void)
 {
     DrawText("Histórias Mal Contadas por B2 Studios.", 10, 10, 40, GREEN);
-    DrawText("F11 para Tela Cheia, ESC para Sair, Digite AJUDA para mais.", 10, 60, 20, GREEN);
+    DrawText("F11 para Tela Cheia, ESC para Sair.", 10, 60, 20, GREEN);
 
-    if (IsKeyPressed(KEY_F11)) {
-        ToggleFullscreen();
-    }
+          if (IsKeyPressed(KEY_F11)) {                
+                 
+                // Obtém a resolução original
+                int screenWidth = GetScreenWidth()*2;
+                int screenHeight = GetScreenHeight()*2;
+    
+                SetWindowSize(screenWidth, screenHeight);
+                ToggleFullscreen();
+               
+        }
 }
 
 void AnalyzeInput(char *inputText)
@@ -101,7 +109,7 @@ void AnalyzeInput(char *inputText)
         isNearDoor = false;
         isNearTable = true;
     } else if (strcmp(inputText, "PEGAR CHAVE") == 0) {
-        if (isNearTable && isWithKey == 0) {
+        if (isNearTable && !isWithKey) {
             const char *newFilePath = "../assets/texts/takeKey.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -110,7 +118,7 @@ void AnalyzeInput(char *inputText)
                 return;
             }
             charCount = 0;
-            isWithKey = 1;
+            isWithKey = true;
         } else {
             const char *newFilePath = "../assets/texts/cannotTakeKey.txt";
             free(fileText);
@@ -122,7 +130,7 @@ void AnalyzeInput(char *inputText)
             charCount = 0;
         }
     } else if (strcmp(inputText, "DESTRANCAR PORTA") == 0) {
-        if (isNearDoor && isWithKey == 1 && doorLocked == 1) {
+        if (isNearDoor && isWithKey == 1 && doorLocked) {
             const char *newFilePath = "../assets/texts/unlockDoorWithKey.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -131,7 +139,7 @@ void AnalyzeInput(char *inputText)
                 return;
             }
             charCount = 0;
-            doorLocked = 0;
+            doorLocked = false;
         } else {
             const char *newFilePath = "../assets/texts/cannotUnlockDoor.txt";
             free(fileText);
@@ -143,7 +151,7 @@ void AnalyzeInput(char *inputText)
             charCount = 0;
         }
     } else if (strcmp(inputText, "ABRIR PORTA") == 0) {
-        if (isNearDoor && doorLocked == 0 && isDoorOpen == 0) {
+        if (isNearDoor && !doorLocked && !isDoorOpen) {
             const char *newFilePath = "../assets/texts/openUnlockedDoor.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -152,8 +160,8 @@ void AnalyzeInput(char *inputText)
                 return;
             }
             charCount = 0;
-            isDoorOpen = 1;
-        } else if (isNearDoor && doorLocked == 1) {
+            isDoorOpen = true;
+        } else if (isNearDoor && doorLocked) {
             const char *newFilePath = "../assets/texts/openLockedDoor.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -172,15 +180,6 @@ void AnalyzeInput(char *inputText)
             }
             charCount = 0;
         }
-    } else if (strcmp(inputText, "AJUDA") == 0) {
-        const char *newFilePath = "../assets/texts/help.txt";
-        free(fileText);
-        fileText = ReadTextFile(newFilePath);
-        if (!fileText) {
-            printf("Failed to read the file.\n");
-            return;
-        }
-        charCount = 0;
     } else {
         const char *newFilePath = "../assets/texts/unknow.txt";
         free(fileText);

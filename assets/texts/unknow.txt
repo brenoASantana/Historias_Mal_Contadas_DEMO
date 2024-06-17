@@ -1,1 +1,10 @@
-Comando não conhecido.
+Comando não reconhecido.
+
+Você deve digitar somente palavras-chave da sua ação e destino.
+
+Exemplo:
+"IR ATE LOCAL", "ABRIR OBJETO", "PEGAR ITEM"
+
+Dica: Explore os ambientes e interaja com os objetos que encontrar. Lembre-se de combinar ações e destinos de forma lógica.
+
+O que você faz?

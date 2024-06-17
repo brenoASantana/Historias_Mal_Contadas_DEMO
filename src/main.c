@@ -10,73 +10,76 @@
 #include <string.h>
 #include <unistd.h>
 
-void InitWindowWithResponsiveResolution() {
+int screenWidth;
+int screenHeight;
+
+void InitWindowWithResponsiveResolution()
+{
+    screenWidth = 800;
+    screenHeight = 600;
     // Inicializa a janela com uma resolução padrão (800x600)
-    InitWindow(800, 600, "Histórias Mal Contadas DEMO");
-    
-    // Obtém a resolução do monitor principal (0)
-    int screenWidth = GetMonitorWidth(0);
-    int screenHeight = GetMonitorHeight(0);
+    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
+
+    // Obtém a metade da resolução do monitor principal (0)
+    screenWidth = GetMonitorWidth(0) / 2;
+    screenHeight = GetMonitorHeight(0) / 2;
 
     // Ajusta a janela para a resolução do monitor em tela cheia
     SetWindowSize(screenWidth, screenHeight);
-    
+
     SetTargetFPS(60);
 }
 
 int main(void)
 {
-  // Inicializa a janela com resolução responsiva
+    // Inicializa a janela com resolução responsiva
     InitWindowWithResponsiveResolution();
-    
+
     InitAudioDevice();
 
     int currentLevel = 1; // Começa na introdução
- 
+
     while (!WindowShouldClose()) // Loop principal do programa, continua enquanto a janela não for fechada
     {
-     
-      if (IsKeyPressed(KEY_F11)) {
-                ToggleFullscreen();
-            }
-     
+
         switch (currentLevel)
         {
-            case 1:
-                LevelOneInit();
-                while (currentLevel == 1 && !WindowShouldClose())
-                {
-                    BeginDrawing();
-                    ClearBackground(BLACK);
+        case 1:
+            LevelOneInit();
+            while (currentLevel == 1 && !WindowShouldClose())
+            {
+                BeginDrawing();
+                ClearBackground(BLACK);
 
-                    LevelOneUpdate();
-                    LevelOneDraw();
-                    
-                    if (isDoorOpen == 1) { // Player conseguiu abrir a porta do level 1
-                        currentLevel++;
-                        LevelOneUnload();
-                    }
+                LevelOneUpdate();
+                LevelOneDraw();
 
-                    EndDrawing();
+                if (isDoorOpen)
+                { // Player conseguiu abrir a porta do level 1
+                    currentLevel++;
+                    LevelOneUnload();
                 }
-                break;
-        
-            case 2:
-                LevelTwoInit();
-                while (currentLevel == 2 && !WindowShouldClose())
-                {
-                    BeginDrawing();
-                    ClearBackground(BLACK);
 
-                    LevelTwoUpdate();
-                    LevelTwoDraw();
-                   
-                    EndDrawing();
-                }
-                break;
-        
-            default:
-                break;
+                EndDrawing();
+            }
+            break;
+
+        case 2:
+            LevelTwoInit();
+            while (currentLevel == 2 && !WindowShouldClose())
+            {
+                BeginDrawing();
+                ClearBackground(BLACK);
+
+                LevelTwoUpdate();
+                LevelTwoDraw();
+
+                EndDrawing();
+            }
+            break;
+
+        default:
+            break;
         }
     }
 

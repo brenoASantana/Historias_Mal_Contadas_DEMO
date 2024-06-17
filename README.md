@@ -1,3 +1,4 @@
+COLOCAR GIFS E PRINTS
 # IHNMAIMS_Demo
 
 Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ).
