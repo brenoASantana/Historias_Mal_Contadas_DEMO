@@ -21,8 +21,6 @@ void InitWindowWithResponsiveResolution() {
     // Ajusta a janela para a resolução do monitor em tela cheia
     SetWindowSize(screenWidth, screenHeight);
     
-    // Alterna para tela cheia
-    ToggleFullscreen();
     SetTargetFPS(60);
 }
 
