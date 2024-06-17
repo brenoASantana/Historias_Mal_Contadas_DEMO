@@ -37,7 +37,11 @@ int main(void)
  
     while (!WindowShouldClose()) // Loop principal do programa, continua enquanto a janela não for fechada
     {
-      
+     
+      if (IsKeyPressed(KEY_F11)) {
+                ToggleFullscreen();
+            }
+     
         switch (currentLevel)
         {
             case 1:
