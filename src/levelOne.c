@@ -20,15 +20,11 @@ void LevelOneInit(void)
     // Inicialize o jogador
     player = CreatePlayerLevelOne();
 
-    // Check if music file exists
-    const char *musicFilePath = "../assets/sounds/musics/woodland_shadows.mp3";
-
-    music = LoadMusicStream(musicFilePath);
+    music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
 
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
 
-    // Check if text file exists
     const char *filePath = "../assets/texts/prologue.txt";
     fileText = ReadTextFile(filePath);
 
@@ -68,7 +64,6 @@ void LevelOneDraw(void)
 {
     if (IsKeyPressed(KEY_F11))
     {
-        // Check if GetScreenWidth() and GetScreenHeight() return non-zero values
         int screenWidth = GetScreenWidth() * 2;
         int screenHeight = GetScreenHeight() * 2;
 
@@ -210,11 +205,7 @@ void AnalyzeInput(char *inputText)
             free(fileText);
         }
         fileText = ReadTextFile(newFilePath);
-        if (fileText == NULL)
-        {
-            printf("Failed to read the file.\n");
-            return;
-        }
+
         charCount = 0;
     }
 }

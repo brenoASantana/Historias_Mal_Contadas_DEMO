@@ -5,8 +5,7 @@ static Music music;
 
 void LevelTwoInit(void)
 {
-    const char *musicFilePath = "../assets/sounds/musics/heilag_vagga.mp3";
-    music = LoadMusicStream(musicFilePath);
+    music = LoadMusicStream("../assets/sounds/musics/heilag_vagga.mp3");
 
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);

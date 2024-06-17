@@ -9,7 +9,6 @@ bool enterPressed = false;  // Flag para verificar se Enter foi pressionado
 // Função para ler o conteúdo de um arquivo de texto
 char *ReadTextFile(const char *filename)
 {
-
     // Abre o arquivo para leitura de texto
     FILE *file = fopen(filename, "r");
     if (!file)
