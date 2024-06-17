@@ -9,9 +9,15 @@ bool enterPressed = false;  // Flag para verificar se Enter foi pressionado
 // Função para ler o conteúdo de um arquivo de texto
 char *ReadTextFile(const char *filename)
 {
+    // Verifica se o nome do arquivo é válido
+    if (filename == NULL)
+    {
+        return NULL;
+    }
+
     // Abre o arquivo para leitura de texto
     FILE *file = fopen(filename, "r");
-    if (!file)
+    if (file == NULL)
     {
         return NULL;
     }
@@ -23,7 +29,7 @@ char *ReadTextFile(const char *filename)
 
     // Aloca memória para armazenar o conteúdo do arquivo
     char *buffer = (char *)malloc(length + 1);
-    if (!buffer)
+    if (buffer == NULL)
     {
         fclose(file);
         return NULL;
@@ -95,7 +101,7 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     // Desenha a última linha, se houver texto restante
     if (bufferIndex > 0)
     {
-        buffer[bufferIndex] = '\0';                        // Adiciona um terminador nulo ao final do buffer
+        buffer[bufferIndex] = '\0';                        // Certifica-se de que o buffer está nulo-terminado
         DrawText(buffer, posX, posY, fontSize, baseColor); // Desenha o texto restante
     }
 }
@@ -110,27 +116,24 @@ void GetUserInput(char *buffer, int maxLength, int *count)
     int key = GetCharPressed();
     while (key > 0)
     {
-        if ((key >= 32) && (key <= 125) && (*count < (maxLength - 1)))
+        if ((key >= 32) && (key <= 125) && (*count < maxLength))
         {
-            buffer[*count] = toupper((char)key); // Converte para maiúsculo antes de adicionar ao buffer
+            buffer[*count] = toupper((char)key);
             (*count)++;
-            buffer[*count] = '\0'; // Adiciona o caractere nulo
+            buffer[*count] = '\0';
         }
 
-        key = GetCharPressed(); // Verifica se mais teclas foram pressionadas
+        key = GetCharPressed();
     }
 
-    if (IsKeyPressed(KEY_BACKSPACE))
+    if (IsKeyPressed(KEY_BACKSPACE) && *count > 0)
     {
-        if (*count > 0)
-        {
-            (*count)--;
-            buffer[*count] = '\0'; // Adiciona o caractere nulo
-        }
+        (*count)--;
+        buffer[*count] = '\0';
     }
 
     if (IsKeyPressed(KEY_ENTER))
     {
-        enterPressed = true; // Define a flag para indicar que Enter foi pressionado
+        enterPressed = true;
     }
 }

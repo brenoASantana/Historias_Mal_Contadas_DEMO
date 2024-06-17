@@ -20,15 +20,28 @@ void LevelOneInit(void)
     // Inicialize o jogador
     player = CreatePlayerLevelOne();
 
-    music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
-
-    SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
-    PlayMusicStream(music);
+    const char *musicPath = "../assets/sounds/musics/woodland_shadows.mp3";
+    if (musicPath != NULL)
+    {
+        music = LoadMusicStream(musicPath);
+        SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
+        PlayMusicStream(music);
+    }
+    else
+    {
+        printf("Failed to load music file.\n");
+    }
 
     const char *filePath = "../assets/texts/prologue.txt";
-    fileText = ReadTextFile(filePath);
-
-    charCount = 0;
+    if (filePath != NULL)
+    {
+        fileText = ReadTextFile(filePath);
+        charCount = 0;
+    }
+    else
+    {
+        printf("Failed to load file text.\n");
+    }
 }
 
 void LevelOneUpdate(void)
@@ -38,11 +51,11 @@ void LevelOneUpdate(void)
     if (!enterPressed)
     {
         DrawTextWithDelay(fileText, 10, 10, 20, GREEN, &charCount, 1);
-        GetUserInput(inputText, 256, &letterCount);
-
         // Desenha o texto digitado pelo usuário em tempo real
         DrawText(">", 10, GetScreenHeight() - 30, 20, GREEN);
         DrawText(inputText, 20, GetScreenHeight() - 30, 20, GREEN);
+
+        GetUserInput(inputText, 256, &letterCount);
 
         if (IsKeyPressed(KEY_ENTER))
         {
@@ -64,20 +77,34 @@ void LevelOneDraw(void)
 {
     if (IsKeyPressed(KEY_F11))
     {
-        int screenWidth = GetScreenWidth() * 2;
-        int screenHeight = GetScreenHeight() * 2;
+        int screenWidth = GetScreenWidth();
+        int screenHeight = GetScreenHeight();
 
-        SetWindowSize(screenWidth, screenHeight);
+        if (screenWidth > 0 && screenHeight > 0)
+        {
+            screenWidth *= 2;
+            screenHeight *= 2;
 
-        ToggleFullscreen();
+            SetWindowSize(screenWidth, screenHeight);
+            ToggleFullscreen();
+        }
+        else
+        {
+            printf("Failed to set window size: screenWidth or screenHeight is zero.\n");
+        }
     }
 
     DrawText("Histórias Mal Contadas por B2 Studios.", 10, 10, 40, GREEN);
-    DrawText("F11 para Tela Cheia, ESC para Sair.", 10, 50, 20, GREEN);
+    DrawText("F11 para alternar entre modo janela e tela cheia, ESC para Sair.", 10, 50, 20, GREEN);
 }
 
 void AnalyzeInput(char *inputText)
 {
+    if (inputText == NULL)
+    {
+        printf("Failed to analyze input: inputText is NULL.\n");
+        return;
+    }
 
     for (int i = 0; inputText[i]; i++)
     {
@@ -212,9 +239,6 @@ void AnalyzeInput(char *inputText)
 
 void LevelOneUnload(void)
 {
-    if (fileText != NULL)
-    {
-        free(fileText);
-    }
+    free(fileText);
     UnloadMusicStream(music);
 }

@@ -18,7 +18,6 @@ void InitWindowWithResponsiveResolution()
     screenWidth = 800;
     screenHeight = 600;
 
-    // Initialize window with default resolution
     InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
 
     // Get half of the monitor resolution
@@ -27,10 +26,16 @@ void InitWindowWithResponsiveResolution()
     int monitorHeight = GetMonitorHeight(monitorIndex);
 
     // Adjust window size to monitor resolution
-    screenWidth = monitorWidth / 2;
-    screenHeight = monitorHeight / 2;
-
-    SetWindowSize(screenWidth, screenHeight);
+    if (monitorWidth > 0 && monitorHeight > 0)
+    {
+        screenWidth = monitorWidth / 2;
+        screenHeight = monitorHeight / 2;
+        SetWindowSize(screenWidth, screenHeight);
+    }
+    else
+    {
+        printf("Failed to set window size: monitorWidth or monitorHeight is zero.\n");
+    }
 
     // Set target frames per second
     SetTargetFPS(60);
