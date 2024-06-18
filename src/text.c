@@ -52,10 +52,6 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     char buffer[256];              // Cria um buffer temporário para armazenar as linhas de texto
     int bufferIndex = 0;           // Índice do buffer
 
-    // Define os limites da tela
-    int screenHeightLimit = GetScreenHeight() - 200;
-    int screenWidthLimit = GetScreenWidth() - 200;
-
     // Loop através do texto até o contador de caracteres
     for (int i = 0; i < *charCount && i < length; i++)
     {
@@ -67,18 +63,6 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
             posY += lineHeight;                                // Move para a próxima linha
             bufferIndex = 0;                                   // Reinicia o índice do buffer para o próximo texto
 
-            // Verifica se atingiu o limite da tela na posição Y
-            if (posY + lineHeight > screenHeightLimit)
-            {
-                posY = y;    // Reinicia a posição Y
-                posX += 200; // Avança a posição X para a próxima coluna
-
-                // Verifica se atingiu o limite da tela na posição X
-                if (posX + 200 > screenWidthLimit)
-                {
-                    break; // Para de desenhar se atingir o limite da tela na posição X
-                }
-            }
         }
         else
         {
