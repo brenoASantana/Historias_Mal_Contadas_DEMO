@@ -1,39 +1,31 @@
-# IHNMAIMS_Demo
+# Histórias Mal Contadas DEMO
 
 Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ).
 
 ## Descrição
 
-"IHNMAIMS_Demo" é uma adaptação interativa do conto de Harlan Ellison, "Não Tenho Boca e Preciso Gritar". Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
+Histórias Mal Contadas DEMO é um jogo de terror inspirado em títulos como Stories Untold, Não tenho boca e preciso gritar (I Have No Mouth, and I Must Scream), Hellblade Senua Sacrifice, Fallout, entre outros. Explore um ambiente onde suas decisões afetam diretamente o desenrolar da trama.
+
+## Requisitos
+
+Esta versão do jogo utiliza somente o terminal nativo do computador, sem a necessidade da biblioteca RayLib.
 
 ## Compilação e Execução
 
 Para compilar e executar o jogo, siga as instruções abaixo:
 
 1. Certifique-se de ter um compilador de C instalado em sua máquina, como o GCC.
+2. Clone este repositório em sua máquina local.
+3. Compile o código-fonte usando o GCC:
 
-2. Clone este repositório em sua máquina local usando o seguinte comando:
-
-```
-git clone https://github.com/brenoasantana/IHNMAIMS_Demo.git
-```
-
-3. Navegue até o diretório do projeto:
-
-```
-cd IHNMAIMS_Demo
+```bash
+gcc -o Historias_Mal_Contadas_DEMO Historias_Mal_Contadas_DEMO.c
 ```
 
-4. Compile o código-fonte usando o GCC:
+4. Execute o jogo:
 
-```
-gcc -o IHNMAIMS_Demo main.c
-```
-
-5. Execute o jogo:
-
-```
-./IHNMAIMS_Game
+```bash
+./Historias_Mal_Contadas_DEMO
 ```
 
 Siga as instruções apresentadas no jogo para avançar na história e tomar decisões que afetarão o desenrolar da trama.
