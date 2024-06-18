@@ -9,29 +9,40 @@
 static char *fileText = NULL;
 static int charCount = 0;
 static Music music;
-bool isDoorLocked = true;
+bool doorLocked = true;
 bool isDoorOpen = false;
-int lastXPosition = 10;
-int lastYPosition = 10;
+
+PlayerLevelOne player;
 
 PlayerLevelOne player;
 
 void LevelOneInit(void)
 {
-    music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
-    SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
-    PlayMusicStream(music);
+    // Inicialize o jogador
+    player = CreatePlayerLevelOne();
 
-    const char *filePath = "../assets/texts/prologue.txt";
-    fileText = ReadTextFile(filePath);
-    if (!fileText)
+    const char *musicPath = "../assets/sounds/musics/woodland_shadows.mp3";
+    if (musicPath != NULL)
     {
-        printf("Failed to read the file.\n");
-        return;
+        music = LoadMusicStream(musicPath);
+        SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
+        PlayMusicStream(music);
+    }
+    else
+    {
+        printf("Failed to load music file.\n");
     }
 
-    charCount = 0;
-    player = CreatePlayerLevelOne();
+    const char *filePath = "../assets/texts/prologue.txt";
+    if (filePath != NULL)
+    {
+        fileText = ReadTextFile(filePath);
+        charCount = 0;
+    }
+    else
+    {
+        printf("Failed to load file text.\n");
+    }
 }
 
 void LevelOneUpdate(void)
@@ -40,12 +51,12 @@ void LevelOneUpdate(void)
 
     if (!enterPressed)
     {
-        DrawTextWithDelay(fileText, 10, 100, 20, GREEN, &charCount, 1);
-        GetUserInput(inputText, 256, &letterCount);
-
+        DrawTextWithDelay(fileText, 10, 10, 20, GREEN, &charCount, 1);
         // Desenha o texto digitado pelo usuário em tempo real
         DrawText(">", 10, GetScreenHeight() - 30, 20, GREEN);
         DrawText(inputText, 20, GetScreenHeight() - 30, 20, GREEN);
+
+        GetUserInput(inputText, 256, &letterCount);
 
         if (IsKeyPressed(KEY_ENTER))
         {
@@ -98,6 +109,8 @@ void AnalyzeInput(char *inputText)
             printf("Failed to read the file.\n");
             return;
         }
+        fileText = ReadTextFile(newFilePath);
+
         charCount = 0;
         player.position = 1; // Define a posição do jogador como perto da porta
     }
@@ -126,6 +139,8 @@ void AnalyzeInput(char *inputText)
                 printf("Failed to read the file.\n");
                 return;
             }
+            fileText = ReadTextFile(newFilePath);
+
             charCount = 0;
             player.hasKey = true; // Define que o jogador pegou a chave
         }
@@ -139,6 +154,8 @@ void AnalyzeInput(char *inputText)
                 printf("Failed to read the file.\n");
                 return;
             }
+            fileText = ReadTextFile(newFilePath);
+
             charCount = 0;
         }
     }
@@ -194,6 +211,8 @@ void AnalyzeInput(char *inputText)
                 printf("Failed to read the file.\n");
                 return;
             }
+            fileText = ReadTextFile(newFilePath);
+
             charCount = 0;
         }
     }
@@ -209,6 +228,8 @@ void AnalyzeInput(char *inputText)
                 printf("Failed to read the file.\n");
                 return;
             }
+            fileText = ReadTextFile(newFilePath);
+
             charCount = 0;
             isDoorOpen = true; // Define que a porta foi aberta
         }
@@ -222,6 +243,8 @@ void AnalyzeInput(char *inputText)
                 printf("Failed to read the file.\n");
                 return;
             }
+            fileText = ReadTextFile(newFilePath);
+
             charCount = 0;
         }
         else
@@ -247,6 +270,8 @@ void AnalyzeInput(char *inputText)
             printf("Failed to read the file.\n");
             return;
         }
+        fileText = ReadTextFile(newFilePath);
+
         charCount = 0;
     }
 }
