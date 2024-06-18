@@ -2,7 +2,7 @@
 
 Player CreatePlayer(Vector2 position)
 {
-    Player player = { position, LoadTexture("assets/sprites/player.png"), 100 };
+    Player player = {position, LoadTexture("assets/sprites/player.png"), 100};
     return player;
 }
 

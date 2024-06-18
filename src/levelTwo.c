@@ -23,7 +23,8 @@ void LevelTwoDraw(void)
     DrawText("Bem-vindo à Fase 2!", 10, 70, 20, RED);
     DrawFPS(10, 130);
 
-    if (IsKeyPressed(KEY_F11)) {
+    if (IsKeyPressed(KEY_F11))
+    {
         ToggleFullscreen();
     }
 }

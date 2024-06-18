@@ -10,5 +10,6 @@ void LevelOneInit(void);
 void LevelOneUpdate(void);
 void LevelOneDraw(void);
 void LevelOneUnload(void);
+void AnalyzeInput(char *inputText);
 
 #endif // LEVELONE_H

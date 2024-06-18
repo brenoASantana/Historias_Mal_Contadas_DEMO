@@ -1,17 +1,7 @@
-#include "player.h"
+#include "../include/playerLevelOne.h"
 
-Player CreatePlayer(Vector2 position)
+PlayerLevelOne CreatePlayerLevelOne()
 {
-    Player player = { position, LoadTexture("assets/sprites/player.png"), 100 };
+    PlayerLevelOne player = {0, false};
     return player;
-}
-
-void UpdatePlayer(Player *player)
-{
-    // Atualização da lógica do jogador
-}
-
-void DrawPlayer(Player player)
-{
-    DrawTexture(player.texture, player.position.x, player.position.y, RAYWHITE);
 }

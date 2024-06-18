@@ -8,10 +8,13 @@ concreto bruto mostrando sinais de umidade e descamação. Você não tem nenhum
 veio parar aqui e a ansiedade começa a permear seus pensamentos ao perceber 
 que também não sabe como irá sair.
 
-À sua frente, uma porta antiga de pinho, desgastada pelo tempo, parece ser a única saída.
-
 À sua esquerda, a mesa de escritório solitária se apoia contra a parede. Feita de madeira 
 escura e polida, ela contrasta com a aspereza do ambiente. 
 Pequenos detalhes como arranhões e imperfeições testemunham seu uso prolongado.
+
+À sua frente, uma porta antiga de pinho, desgastada pelo tempo, parece ser a única saída.
+
+Você sente um impulso irresistível de IR ATE PORTA, apesar do medo que te consome, 
+determinado a descobrir mais sobre esse lugar macabro.
 
 O que você faz?

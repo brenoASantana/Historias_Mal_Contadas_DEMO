@@ -2,7 +2,7 @@
 
 Enemy CreateEnemy(Vector2 position)
 {
-    Enemy enemy = { position, LoadTexture("assets/sprites/enemy.png"), 50 };
+    Enemy enemy = {position, LoadTexture("assets/sprites/enemy.png"), 50};
     return enemy;
 }
 

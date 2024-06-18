@@ -10,30 +10,11 @@
 #include <string.h>
 #include <unistd.h>
 
-int screenWidth;
-int screenHeight;
-
-void InitWindowWithResponsiveResolution()
-{
-    screenWidth = 800;
-    screenHeight = 600;
-    // Inicializa a janela com uma resolução padrão (800x600)
-    InitWindow(screenWidth, screenHeight, "Histórias Mal Contadas DEMO");
-
-    // Obtém a metade da resolução do monitor principal (0)
-    screenWidth = GetMonitorWidth(0) / 2;
-    screenHeight = GetMonitorHeight(0) / 2;
-
-    // Ajusta a janela para a resolução do monitor em tela cheia
-    SetWindowSize(screenWidth, screenHeight);
-
-    SetTargetFPS(60);
-}
-
 int main(void)
 {
-    // Inicializa a janela com resolução responsiva
-    InitWindowWithResponsiveResolution();
+
+    InitWindow(1280, 720, "Histórias Mal Contadas DEMO");
+    SetTargetFPS(60);
 
     InitAudioDevice();
 

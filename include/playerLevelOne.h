@@ -1,16 +1,20 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYERLEVELONE_H
+#define PLAYERLEVELONE_H
 
 #include "raylib.h"
 
-typedef struct Player {
-    Vector2 position;
-    Texture2D texture;
-    int health;
-} Player;
+typedef struct PlayerLevelOne
+{
+    int position;
+    bool hasKey;
+} PlayerLevelOne;
 
-Player CreatePlayer(Vector2 position);
-void UpdatePlayer(Player *player);
-void DrawPlayer(Player player);
+/*Posições:
+- 0: Player está no spawn
+- 1: Player está perto da porta
+- 2: Player está perto da mesa
+*/
 
-#endif // PLAYER_H
+PlayerLevelOne CreatePlayerLevelOne();
+
+#endif // PLAYERLEVELONE_H
