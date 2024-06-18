@@ -13,9 +13,9 @@ Histórias Mal Contadas DEMO é um jogo de terror inspirado em títulos como Sto
 
 Para executar o jogo, siga as instruções abaixo:
 
-1. Clone este repositório em sua máquina local.
+1. Baixe o código fonte zipado e extraia-o.
 2. Navegue até a pasta "src".
-3. Execute o arquivo "Historias Mal Contadas DEMO.exe".
+3. Execute o arquivo "main.exe".
 
 > Se o Windows alertar sobre o arquivo ser de um autor desconhecido, ignore o aviso ou siga as instruções para permitir a execução do arquivo.
 
