@@ -18,10 +18,7 @@ void LevelTwoUpdate(void)
 
 void LevelTwoDraw(void)
 {
-    DrawText("F11 para Tela Cheia", 10, 10, 20, RED);
-    DrawText("ESC para Sair", 10, 40, 20, RED);
-    DrawText("Bem-vindo à Fase 2!", 10, 70, 20, RED);
-    DrawFPS(10, 130);
+    DrawText("Bem vindo ao inferno.", 10, 10, 20, RED);
 
     if (IsKeyPressed(KEY_F11))
     {
