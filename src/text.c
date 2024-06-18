@@ -9,17 +9,10 @@ bool enterPressed = false;  // Flag para verificar se Enter foi pressionado
 // Função para ler o conteúdo de um arquivo de texto
 char *ReadTextFile(const char *filename)
 {
-    // Verifica se o nome do arquivo é válido
-    if (filename == NULL)
+    FILE *file = fopen(filename, "r"); // Abre o arquivo para leitura de texto
+    if (!file)
     {
-        return NULL;
-    }
-
-    // Abre o arquivo para leitura de texto
-    FILE *file = fopen(filename, "r");
-    if (file == NULL)
-    {
-        return NULL;
+        return NULL; // Retorna NULL se o arquivo não puder ser aberto
     }
 
     // Obtém o tamanho do arquivo
@@ -29,21 +22,14 @@ char *ReadTextFile(const char *filename)
 
     // Aloca memória para armazenar o conteúdo do arquivo
     char *buffer = (char *)malloc(length + 1);
-    if (buffer == NULL)
+    if (!buffer)
     {
         fclose(file);
         return NULL;
     }
 
     // Lê o conteúdo do arquivo para o buffer
-    size_t bytesRead = fread(buffer, 1, length, file);
-    if (bytesRead != length)
-    {
-        free(buffer);
-        fclose(file);
-        return NULL;
-    }
-
+    fread(buffer, 1, length, file);
     buffer[length] = '\0'; // Adiciona um terminador nulo ao final da string
 
     fclose(file); // Fecha o arquivo
@@ -54,11 +40,6 @@ char *ReadTextFile(const char *filename)
 // Função para desenhar texto com delay, considerando quebra de linha ao pressionar "Enter"
 void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseColor, int *charCount, int textSpeed)
 {
-    if (text == NULL || charCount == NULL)
-    {
-        return;
-    }
-
     int length = strlen(text); // Calcula o comprimento total do texto
     if (*charCount < length)
     {
@@ -71,8 +52,9 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     char buffer[256];              // Cria um buffer temporário para armazenar as linhas de texto
     int bufferIndex = 0;           // Índice do buffer
 
-    // Define o limite da tela
-    int screenWidthLimit = GetScreenWidth() - 40;
+    // Define os limites da tela
+    int screenHeightLimit = GetScreenHeight() - 200;
+    int screenWidthLimit = GetScreenWidth() - 200;
 
     // Loop através do texto até o contador de caracteres
     for (int i = 0; i < *charCount && i < length; i++)
@@ -107,39 +89,37 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
     // Desenha a última linha, se houver texto restante
     if (bufferIndex > 0)
     {
-        buffer[bufferIndex] = '\0';                        // Certifica-se de que o buffer está nulo-terminado
+        buffer[bufferIndex] = '\0';                        // Adiciona um terminador nulo ao final do buffer
         DrawText(buffer, posX, posY, fontSize, baseColor); // Desenha o texto restante
     }
 }
 
 void GetUserInput(char *buffer, int maxLength, int *count)
 {
-    if (buffer == NULL || count == NULL)
-    {
-        return;
-    }
-
     int key = GetCharPressed();
     while (key > 0)
     {
-        if ((key >= 32) && (key <= 125) && (*count < maxLength))
+        if ((key >= 32) && (key <= 125) && (*count < (maxLength - 1)))
         {
-            buffer[*count] = toupper((char)key);
+            buffer[*count] = toupper((char)key); // Converte para maiúsculo antes de adicionar ao buffer
             (*count)++;
-            buffer[*count] = '\0';
+            buffer[*count] = '\0'; // Adiciona o caractere nulo
         }
 
-        key = GetCharPressed();
+        key = GetCharPressed(); // Verifica se mais teclas foram pressionadas
     }
 
-    if (IsKeyPressed(KEY_BACKSPACE) && *count > 0)
+    if (IsKeyPressed(KEY_BACKSPACE))
     {
-        (*count)--;
-        buffer[*count] = '\0';
+        if (*count > 0)
+        {
+            (*count)--;
+            buffer[*count] = '\0'; // Adiciona o caractere nulo
+        }
     }
 
     if (IsKeyPressed(KEY_ENTER))
     {
-        enterPressed = true;
+        enterPressed = true; // Define a flag para indicar que Enter foi pressionado
     }
 }

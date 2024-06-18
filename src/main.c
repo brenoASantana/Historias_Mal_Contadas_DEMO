@@ -2,6 +2,7 @@
 #include "../include/text.h"
 #include "../include/levelOne.h"
 #include "../include/levelTwo.h"
+#include "text.c"
 #include "levelOne.c"
 #include "levelTwo.c"
 #include <stdio.h>
@@ -21,12 +22,11 @@ int main(void)
 
     while (!WindowShouldClose()) // Loop principal do programa, continua enquanto a janela não for fechada
     {
+
         switch (currentLevel)
         {
-
         case 1:
             LevelOneInit();
-
             while (currentLevel == 1 && !WindowShouldClose())
             {
                 BeginDrawing();
@@ -43,12 +43,10 @@ int main(void)
 
                 EndDrawing();
             }
-            LevelOneUnload();
             break;
 
         case 2:
             LevelTwoInit();
-
             while (currentLevel == 2 && !WindowShouldClose())
             {
                 BeginDrawing();
@@ -59,7 +57,6 @@ int main(void)
 
                 EndDrawing();
             }
-            LevelTwoUnload();
             break;
 
         default:
