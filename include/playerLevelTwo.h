@@ -1,17 +1,21 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYERLEVELTWO_H
+#define PLAYERLEVELTWO_H
 
 #include "raylib.h"
 
-typedef struct Player
+typedef struct PlayerLevelTwo
 {
     Vector2 position;
     Texture2D texture;
-    int health;
-} Player;
+    int hp;
+    int hit;
+    int habilityID;
+    int hasKey;
+    int atTable;
+} PlayerLevelTwo;
 
-Player CreatePlayer(Vector2 position);
-void UpdatePlayer(Player *player);
-void DrawPlayer(Player player);
+Player CreatePlayerLevelTwo(Vector2 position);
+void UpdatePlayerLevelTwo(Player *player);
+void DrawPlayerLevelTwo(Player player);
 
-#endif // PLAYER_H
+#endif // PLAYERLEVELTWO_H
