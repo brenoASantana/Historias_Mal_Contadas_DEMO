@@ -1,41 +1,23 @@
-COLOCAR GIFS E PRINTS
-# IHNMAIMS_Demo
+# LEMBRETE PARA COLOCAR PRINTS E GIFS DO JOGO
+# Histórias Mal Contadas DEMO
 
 Este é o projeto final da disciplina de Linguagem de Programação I da Universidade do Estado do Rio de Janeiro (UERJ).
 
 ## Descrição
 
-"IHNMAIMS_Demo" é uma adaptação interativa do conto de Harlan Ellison, "Não Tenho Boca e Preciso Gritar". Nele, o jogador será imerso em um mundo sombrio e distópico onde uma superinteligência artificial chamada AM (Allied Mastercomputer) mantém cinco humanos vivos apenas para torturá-los eternamente.
+Histórias Mal Contadas DEMO é um jogo de terror inspirado em títulos como Stories Untold, Não tenho boca e preciso gritar (I Have No Mouth, and I Must Scream), Hellblade Senua Sacrifice, Fallout, entre outros. Explore um ambiente onde suas decisões afetam diretamente o desenrolar da trama.
 
-## Compilação e Execução
+> Este é um demo com funcionalidades limitadas em relação ao plano original. Futuramente, planejamos continuar o desenvolvimento do jogo completo em uma linguagem mais avançada e com assets de autoria própria.
 
-Para compilar e executar o jogo, siga as instruções abaixo:
+## Execução
 
-1. Certifique-se de ter um compilador de C instalado em sua máquina, como o GCC.
+Para executar o jogo, siga as instruções abaixo:
 
-2. Clone este repositório em sua máquina local usando o seguinte comando:
+1. Clone este repositório em sua máquina local.
+2. Navegue até a pasta "src".
+3. Execute o arquivo "Historias Mal Contadas DEMO.exe".
 
-```
-git clone https://github.com/brenoasantana/IHNMAIMS_Demo.git
-```
-
-3. Navegue até o diretório do projeto:
-
-```
-cd IHNMAIMS_Demo
-```
-
-4. Compile o código-fonte usando o GCC:
-
-```
-gcc -o IHNMAIMS_Demo main.c
-```
-
-5. Execute o jogo:
-
-```
-./IHNMAIMS_Game
-```
+> Se o Windows alertar sobre o arquivo ser de um autor desconhecido, ignore o aviso ou siga as instruções para permitir a execução do arquivo.
 
 Siga as instruções apresentadas no jogo para avançar na história e tomar decisões que afetarão o desenrolar da trama.
 
