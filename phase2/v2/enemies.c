@@ -32,8 +32,8 @@ typedef struct Enemy {
 } Enemy;
 
 typedef enum GameScreen {
+    START,
     GAMEPLAY,
-    PAUSE,
     GAMEOVER
 } GameScreen;
 
@@ -47,7 +47,10 @@ int currentWave = 0; // Onda atual
 int enemiesPerWave = 2; // Número inicial de inimigos por onda
 float timeBetweenWaves = 5.0f; // Tempo entre ondas
 float waveTimer = 0; // Timer para controlar o tempo entre as ondas
-GameScreen currentScreen = GAMEPLAY;
+float startTime = 0; // Tempo de início para a tela de início
+GameScreen currentScreen = START; // Variável global para rastrear a tela atual
+
+Texture2D startScreenImage; // Textura para a tela de início
 
 void InitGame(void);
 void SpawnEnemies(void);
@@ -62,7 +65,9 @@ int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "HMC");
 
     InitGame();
-
+    
+    startTime = GetTime(); // Definir o tempo inicial
+    
     SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
@@ -70,11 +75,37 @@ int main(void) {
         DrawGame();
     }
 
+    UnloadTexture(startScreenImage); // Descarrega a textura da imagem
+    free(enemies); // Libera a memória alocada
     CloseWindow();
 
-    free(enemies); // Libera a memória alocada
-
     return 0;
+}
+
+void DrawPixelatedBackground(void)
+{
+    // Define fundo White Noise
+    Color stoneGray1 = (Color){ 100, 100, 100, 255 };
+    Color stoneGray2 = (Color){ 120, 120, 120, 255 };
+    Color stoneGray3 = (Color){ 140, 140, 140, 255 };
+    Color stoneGray4 = (Color){ 160, 160, 160, 255 };
+
+    // Define as cores
+    Color stoneColors[4] = {stoneGray1, stoneGray2, stoneGray3, stoneGray4};
+    
+    // Define tamanho do bloco
+    int pixelSize = 10;
+
+    // Desenha o fundo
+    for (int y = 0; y < SCREEN_HEIGHT; y += pixelSize)
+    {
+        for (int x = 0; x < SCREEN_WIDTH; x += pixelSize)
+        {
+            // Troca aleatoriamente
+            Color color = stoneColors[rand() % 4];
+            DrawRectangle(x, y, pixelSize, pixelSize, color);
+        }
+    }
 }
 
 void InitGame(void) {
@@ -92,6 +123,9 @@ void InitGame(void) {
     gameTime = 0;
     defeatedEnemies = 0;
     StartNextWave();
+    
+    // Carrega a imagem da tela de início
+    startScreenImage = LoadTexture("assets/Jump.png");
 }
 
 void StartNextWave(void) {
@@ -136,84 +170,97 @@ void UpdateEnemies(void) {
 
 void DrawGame(void) {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
 
-    if (currentScreen == GAMEPLAY) {
-        DrawCircleV(player.position, PLAYER_SIZE / 2, player.color);
+    switch (currentScreen)
+    {
+        case START: {
+            int centerX = (SCREEN_WIDTH - startScreenImage.width) / 2;
+            int centerY = (SCREEN_HEIGHT - startScreenImage.height) / 2;
+            DrawTexture(startScreenImage, centerX, centerY, WHITE);
+            DrawText("BEM-VINDO AO INFERNO!", SCREEN_WIDTH/2 - MeasureText("BEM-VINDO AO INFERNO!", 20)/2, SCREEN_HEIGHT/3 - 10, 20, RED);
+        } break;
+            
+        case GAMEPLAY:
+            DrawCircleV(player.position, PLAYER_SIZE / 2, player.color);
 
-        if (player.isAttacking) {
-            DrawCircleLines(player.position.x, player.position.y, ATTACK_RANGE, BLACK);
-        }
-
-        for (int i = 0; i < enemyCount; i++) {
-            if (enemies[i].active) {
-                DrawCircleV(enemies[i].position, ENEMY_SIZE / 2, enemies[i].color);
+            if (player.isAttacking) {
+                DrawCircleLines(player.position.x, player.position.y, ATTACK_RANGE, YELLOW);
             }
-        }
 
-        DrawText(TextFormat("Vida: %d", player.health), 10, 10, 20, BLACK);
-        DrawText(TextFormat("Tempo: %.2f", gameTime), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Tempo: %.2f", gameTime), 20) / 2, 10, 20, BLACK);
-        DrawText(TextFormat("Onda: %d", currentWave), SCREEN_WIDTH - 100, 10, 20, BLACK); // Desenhar o contador de ondas
-    } else if (currentScreen == PAUSE) {
-        DrawText("PAUSADO", SCREEN_WIDTH / 2 - MeasureText("PAUSADO", 40) / 2, SCREEN_HEIGHT / 2 - 40, 40, BLACK);
-        DrawText("Pressione ENTER para sair", SCREEN_WIDTH / 2 - MeasureText("Pressione ENTER para sair", 20) / 2, SCREEN_HEIGHT / 2, 20, BLACK);
-        DrawText("Pressione P para continuar", SCREEN_WIDTH / 2 - MeasureText("Pressione P para continuar", 20) / 2, SCREEN_HEIGHT / 2 + 30, 20, BLACK);
-    } else if (currentScreen == GAMEOVER) {
-        DrawText("FIM DE JOGO", SCREEN_WIDTH / 2 - MeasureText("FIM DE JOGO", 40) / 2, SCREEN_HEIGHT / 2 - 40, 40, BLACK);
-        DrawText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), 20) / 2, SCREEN_HEIGHT / 2, 20, BLACK);
-        DrawText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), 20) / 2, SCREEN_HEIGHT / 2 + 30, 20, BLACK);
-        DrawText("Pressione ENTER para reiniciar", SCREEN_WIDTH / 2 - MeasureText("Pressione ENTER para reiniciar", 20) / 2, SCREEN_HEIGHT / 2 + 60, 20, BLACK);
+            for (int i = 0; i < enemyCount; i++) {
+                if (enemies[i].active) {
+                    DrawCircleV(enemies[i].position, ENEMY_SIZE / 2, enemies[i].color);
+                }
+            }
+            
+            DrawText(TextFormat("Vida: %d", player.health), 10, 10, 20, RED);
+            DrawText(TextFormat("Tempo: %.2f", gameTime), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Tempo: %.2f", gameTime), 20) / 2, 10, 20, RED);
+            DrawText(TextFormat("Onda: %d", currentWave), SCREEN_WIDTH - 100, 10, 20, RED);   // Desenhar o contador de ondas
+            break;
+            
+        case GAMEOVER:
+            DrawPixelatedBackground();
+            DrawText("FIM DE JOGO", SCREEN_WIDTH / 2 - MeasureText("FIM DE JOGO", 40) / 2, SCREEN_HEIGHT / 2 - 40, 40, RED);
+            DrawText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), 20) / 2, SCREEN_HEIGHT / 2, 20, RED);
+            DrawText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), SCREEN_WIDTH / 2 - MeasureText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), 20) / 2, SCREEN_HEIGHT / 2 + 30, 20, RED);
+            break;
+            
+        default:
+            break;
     }
 
     EndDrawing();
 }
 
 void UpdateGame(void) {
-    if (currentScreen == GAMEPLAY) {
-        float deltaTime = GetFrameTime();
-        gameTime += deltaTime;
-        spawnTimer += deltaTime;
-        waveTimer += deltaTime;
-
-        // Atualizar Jogador
-        UpdatePlayer(deltaTime);
-
-        // Atualizar Inimigos
-        UpdateEnemies();
-
-        // Verificar se todos os inimigos foram derrotados para iniciar a próxima onda
-        bool allEnemiesDefeated = true;
-        for (int i = 0; i < enemyCount; i++) {
-            if (enemies[i].active) {
-                allEnemiesDefeated = false;
-                break;
+    switch (currentScreen)
+    {
+        case START:
+            if (GetTime() - startTime > 3.0) // Verifica se já se passaram 3 segundos
+            {
+                currentScreen = GAMEPLAY;
             }
-        }
+            break;
+            
+        case GAMEPLAY:
+            float deltaTime = GetFrameTime();
+            gameTime += deltaTime;
+            spawnTimer += deltaTime;
+            waveTimer += deltaTime;
 
-        if (allEnemiesDefeated) {
-            if (waveTimer >= timeBetweenWaves) {
-                waveTimer = 0;
-                StartNextWave();
+            // Atualizar Jogador
+            UpdatePlayer(deltaTime);
+
+            // Atualizar Inimigos
+            UpdateEnemies();
+
+            // Verificar se todos os inimigos foram derrotados para iniciar a próxima onda
+            bool allEnemiesDefeated = true;
+            for (int i = 0; i < enemyCount; i++) {
+                if (enemies[i].active) {
+                    allEnemiesDefeated = false;
+                    break;
+                }
             }
-        } else {
-            waveTimer = 0; // Reinicia o timer se ainda há inimigos ativos
-        }
 
-        // Verifica fim de jogo
-        if (player.health <= 0) {
-            currentScreen = GAMEOVER;
-        }
-    } else if (currentScreen == PAUSE) {
-        if (IsKeyPressed(KEY_ENTER)) {
-            CloseWindow();
-        } else if (IsKeyPressed(KEY_P)) {
-            currentScreen = GAMEPLAY;
-        }
-    } else if (currentScreen == GAMEOVER) {
-        if (IsKeyPressed(KEY_ENTER)) {
-            InitGame();
-            currentScreen = GAMEPLAY;
-        }
+            if (allEnemiesDefeated) {
+                if (waveTimer >= timeBetweenWaves) {
+                    waveTimer = 0;
+                    StartNextWave();
+                }
+            } else {
+                waveTimer = 0; // Reinicia o timer se ainda há inimigos ativos
+            }
+
+            // Verifica fim de jogo
+            if (player.health <= 0) {
+                currentScreen = GAMEOVER;
+            }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -227,7 +274,7 @@ void UpdatePlayer(float deltaTime) {
     if (player.position.x < PLAYER_SIZE / 2) player.position.x = PLAYER_SIZE / 2;
     if (player.position.x > SCREEN_WIDTH - PLAYER_SIZE / 2) player.position.x = SCREEN_WIDTH - PLAYER_SIZE / 2;
     if (player.position.y < PLAYER_SIZE / 2) player.position.y = PLAYER_SIZE / 2;
-    if (player.position.y > SCREEN_HEIGHT - PLAYER_SIZE / 2) player.position.y = SCREEN_HEIGHT - PLAYER_SIZE / 2;
+    if (player.position.y > SCREEN_HEIGHT - PLAYER_SIZE / 2) player.position.y = SCREEN_HEIGHT / 2;
 
     // Atualiza o cooldown do ataque
     if (player.attackCooldown > 0) {
