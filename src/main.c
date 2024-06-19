@@ -23,11 +23,13 @@ int main(void) {
 
     int currentLevel = 1; // Começa na introdução
 
-    while (!WindowShouldClose()) { // Loop principal do programa, continua enquanto a janela não for fechada
-        switch (currentLevel) {
-            case 1:
+    //while (!WindowShouldClose()) { // Loop principal do programa, continua enquanto a janela não for fechada
+        //switch (currentLevel) {
+         //   case 1:
                 LevelOneInit();
-                while (currentLevel == 1 && !WindowShouldClose()) {
+                do{
+                    
+                //while (currentLevel == 1 && !WindowShouldClose()) {
                     BeginDrawing();
                     ClearBackground(BLACK);
 
@@ -40,12 +42,20 @@ int main(void) {
                     }
 
                     EndDrawing();
-                }
-                break;
+                }while(currentLevel == 1 && !WindowShouldClose());
+              //  }
+              //  break;
+CloseAudioDevice();
+    CloseWindow();
+    InitWindow(1280, 720, "Histórias Mal Contadas DEMO");
+    SetTargetFPS(60);
 
-            case 2:
-                LevelTwoInit();
-                while (currentLevel == 2 && !WindowShouldClose()) {
+    InitAudioDevice();
+    LevelTwoInit();
+            do{
+           // case 2:
+                
+                //while (currentLevel == 2 && !WindowShouldClose()) {
                     //LevelOneUnload();
                     BeginDrawing();
                     ClearBackground(BLACK);
@@ -54,14 +64,15 @@ int main(void) {
                     LevelTwoDraw();
 
                     EndDrawing();
-                }
-                break;
+                }while(currentLevel == 2 && !WindowShouldClose());
+               // }
+            //    break;
 
-            default:
-                break;
-        }
-    }
-
+           // default:
+           //     break;
+        //}
+   // }
+    LevelTwoUnload();
     CloseAudioDevice();
     CloseWindow();
 
