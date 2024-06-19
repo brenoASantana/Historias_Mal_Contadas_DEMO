@@ -3,15 +3,15 @@
 
 #include "raylib.h"
 
-typedef struct Enemy
-{
+#define ENEMY_SPEED 100.0f
+
+typedef struct Enemy {
     Vector2 position;
-    Texture2D texture;
-    int health;
+    bool active;
+    Color color;
 } Enemy;
 
-Enemy CreateEnemy(Vector2 position);
-void UpdateEnemy(Enemy *enemy);
-void DrawEnemy(Enemy enemy);
+void SpawnEnemies(void);
+void UpdateEnemies(void);
 
 #endif // ENEMY_H

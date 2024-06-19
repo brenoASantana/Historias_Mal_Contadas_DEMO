@@ -1,10 +1,12 @@
 #include "raylib.h"
+#include <string.h>
+#include <ctype.h> // Adicionado para usar a função toupper
+
 #include "../include/text.h"
 #include "../include/levelOne.h"
 #include "../include/PlayerLevelOne.h"
 #include "playerLevelOne.c"
-#include <string.h>
-#include <ctype.h> // Adicionado para usar a função toupper
+
 
 static char *fileText = NULL;
 static int charCount = 0;
@@ -14,7 +16,7 @@ bool isDoorOpen = false;
 int lastXPosition = 10;
 int lastYPosition = 10;
 
-PlayerLevelOne player;
+PlayerLevelOne playerLevelOne;
 
 void LevelOneInit(void)
 {
@@ -31,7 +33,7 @@ void LevelOneInit(void)
     }
 
     charCount = 0;
-    player = CreatePlayerLevelOne();
+    playerLevelOne = CreatePlayerLevelOne();
 }
 
 void LevelOneUpdate(void)
@@ -96,7 +98,7 @@ void AnalyzeInput(char *inputText)
             return;
         }
         charCount = 0;
-        player.position = 1;//Player está próximo da porta
+        playerLevelOne.position = 1;//Player está próximo da porta
     } else if (strcmp(inputText, "IR ATE MESA") == 0) {
         const char *newFilePath = "../assets/texts/goToTable.txt";
         free(fileText);
@@ -106,9 +108,9 @@ void AnalyzeInput(char *inputText)
             return;
         }
         charCount = 0;
-        player.position = 2;//Player está próximo da mesa
+        playerLevelOne.position = 2;//Player está próximo da mesa
     } else if (strcmp(inputText, "PEGAR CHAVE") == 0) {
-        if (player.position == 2) {// Se o player estiver próximo da mesa
+        if (playerLevelOne.position == 2) {// Se o player estiver próximo da mesa
             const char *newFilePath = "../assets/texts/takeKey.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -117,7 +119,7 @@ void AnalyzeInput(char *inputText)
                 return;
             }
             charCount = 0;
-            player.hasKey = true;
+            playerLevelOne.hasKey = true;
         } else { // Player está longe da mesa
             const char *newFilePath = "../assets/texts/tooFarTakeKey.txt";
             free(fileText);
@@ -129,7 +131,7 @@ void AnalyzeInput(char *inputText)
             charCount = 0;
         }
     } else if (strcmp(inputText, "DESTRANCAR PORTA") == 0) {
-        if (player.position==1 && player.hasKey) {//Se o  player está próximo da porta e com a chave
+        if (playerLevelOne.position==1 && playerLevelOne.hasKey) {//Se o  player está próximo da porta e com a chave
             const char *newFilePath = "../assets/texts/unlockDoorWithKey.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -139,7 +141,7 @@ void AnalyzeInput(char *inputText)
             }
             charCount = 0;
             isDoorLocked = false;
-        } else if(player.position==1 && !player.hasKey){//Se o player está próximo da porta mas sem a chave
+        } else if(playerLevelOne.position==1 && !playerLevelOne.hasKey){//Se o player está próximo da porta mas sem a chave
             const char *newFilePath = "../assets/texts/tryUnlockDoorWithoutKey.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -160,7 +162,7 @@ void AnalyzeInput(char *inputText)
             charCount = 0;
         }
     } else if (strcmp(inputText, "ABRIR PORTA") == 0) {
-        if (player.position==1 && !isDoorLocked) {//Se o player está próximo da porta e a porta está destrancada
+        if (playerLevelOne.position==1 && !isDoorLocked) {//Se o player está próximo da porta e a porta está destrancada
             const char *newFilePath = "../assets/texts/openUnlockedDoor.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);
@@ -170,7 +172,7 @@ void AnalyzeInput(char *inputText)
             }
             charCount = 0;
             isDoorOpen = true;
-        } else if (player.position==1 && isDoorLocked) {//Se o player está próximo da porta e a porta está trancada
+        } else if (playerLevelOne.position==1 && isDoorLocked) {//Se o player está próximo da porta e a porta está trancada
             const char *newFilePath = "../assets/texts/tryOpenLockedDoor.txt";
             free(fileText);
             fileText = ReadTextFile(newFilePath);

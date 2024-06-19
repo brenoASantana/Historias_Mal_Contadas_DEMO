@@ -2,6 +2,6 @@
 
 PlayerLevelOne CreatePlayerLevelOne()
 {
-    PlayerLevelOne player = {0, false};
-    return player;
+    PlayerLevelOne playerLevelOne = {0, false};
+    return playerLevelOne;
 }

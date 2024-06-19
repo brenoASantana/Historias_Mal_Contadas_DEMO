@@ -1,6 +1,8 @@
 #include "raylib.h"
-#include "../include/text.h"
 #include <ctype.h> // Adicionado para usar a função toupper
+
+#include "../include/text.h"
+
 
 char inputText[256] = "\0"; // Buffer para armazenar o texto digitado
 int letterCount = 0;        // Contador de caracteres
