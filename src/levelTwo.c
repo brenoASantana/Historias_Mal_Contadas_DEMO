@@ -6,12 +6,7 @@
 #include "../include/playerLevelTwo.h"
 #include "../include/enemy.h"
 
-/*
-
-#include "../include/levelTwo.h"
-#include "playerLevelTwo.c"
-*/
-Player player;
+PlayerLevelTwo playerLevelTwo;
 Enemy *enemies;
 int enemyCount = 2;
 int defeatedEnemies = 0;
@@ -26,28 +21,31 @@ GameScreen currentScreen = START;
 
 Texture2D startScreenImage;
 
-void StartNextWave(void) {
+void StartNextWave(void)
+{
     currentWave++;
     enemyCount = enemiesPerWave * currentWave;
     enemies = (Enemy *)realloc(enemies, enemyCount * sizeof(Enemy));
-    for (int i = 0; i < enemyCount; i++) {
+    for (int i = 0; i < enemyCount; i++)
+    {
         enemies[i].active = false;
         enemies[i].color = RED;
     }
-    SpawnEnemies();
+    EnimiesSpawn();
 }
 
+//Desenha o white noise do game over
 void DrawPixelatedBackground(void)
 {
     // Define fundo White Noise
-    Color stoneGray1 = (Color){ 100, 100, 100, 255 };
-    Color stoneGray2 = (Color){ 120, 120, 120, 255 };
-    Color stoneGray3 = (Color){ 140, 140, 140, 255 };
-    Color stoneGray4 = (Color){ 160, 160, 160, 255 };
+    Color stoneGray1 = (Color){100, 100, 100, 255};
+    Color stoneGray2 = (Color){120, 120, 120, 255};
+    Color stoneGray3 = (Color){140, 140, 140, 255};
+    Color stoneGray4 = (Color){160, 160, 160, 255};
 
     // Define as cores
     Color stoneColors[4] = {stoneGray1, stoneGray2, stoneGray3, stoneGray4};
-    
+
     // Define tamanho do bloco
     int pixelSize = 10;
 
@@ -62,23 +60,28 @@ void DrawPixelatedBackground(void)
         }
     }
 }
-static Music music;
+static Music soundTrack;
 static Music jumpscare;
-static Music whitenoise;
-void LevelTwoInit(void) {
-    music = LoadMusicStream("../assets/sounds/musics/heilag_vagga.mp3");
-    SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
-    PlayMusicStream(music);
-    jumpscare = LoadMusicStream("../assets/sounds/musics/sfx_johnPossessed.ogg");
-    whitenoise = LoadMusicStream("../assets/sounds/musics/8-Bit White Noise.mp3");
-    SetMusicVolume(jumpscare, 0.20); // Set volume for music (1.0 is max level)
-    SetMusicVolume(whitenoise, 0.20); // Set volume for music (1.0 is max level)
+static Music gameOver;
+void LevelTwoInit(void)
+{
+    soundTrack = LoadMusicStream("../assets/sounds/soundtracks/heilag_vagga.mp3");
+    SetMusicVolume(soundTrack, 0.20); // Set volume for music (1.0 is max level)
+    PlayMusicStream(soundTrack);
+
+    jumpscare = LoadMusicStream("../assets/sounds/effects/jumpscare.ogg");
+    SetMusicVolume(jumpscare, 0.20);  // Set volume for music (1.0 is max level)
+
+    gameOver = LoadMusicStream("../assets/sounds/soundtracks/white_noise.mp3");
+    SetMusicVolume(gameOver, 0.20); // Set volume for music (1.0 is max level)
+    
     PlayMusicStream(jumpscare);
-    player.position = (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2};
-    player.health = PLAYER_HEALTH;
-    player.color = BLUE;
-    player.isAttacking = false;
-    player.attackCooldown = 0;
+    
+    playerLevelTwo.position = (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2};
+    playerLevelTwo.health = PLAYERLEVELTWO_HEALTH;
+    playerLevelTwo.color = BLUE;
+    playerLevelTwo.isAttacking = false;
+    playerLevelTwo.attackCooldown = 0;
 
     currentWave = 0;
     waveTimer = 0;
@@ -89,107 +92,125 @@ void LevelTwoInit(void) {
     defeatedEnemies = 0;
     StartNextWave();
 
-    startScreenImage = LoadTexture("../assets/Jump.png");
+    startScreenImage = LoadTexture("../assets/images/jumpscare.png");
 }
 
-void LevelTwoUpdate(void) {
-    UpdateMusicStream(music);
+void LevelTwoUpdate(void)
+{
+    UpdateMusicStream(soundTrack);
     UpdateMusicStream(jumpscare);
-    UpdateMusicStream(whitenoise);
-    switch (currentScreen) {
-        case START:
-            if (GetTime() - startTime > 3.0) {                
-                StopMusicStream(jumpscare);
-                currentScreen = GAMEPLAY;
+    UpdateMusicStream(gameOver);
+    switch (currentScreen)
+    {
+    case START:
+        if (GetTime() - startTime > 3.0)
+        {
+            StopMusicStream(jumpscare);
+            currentScreen = GAMEPLAY;
+        }
+        break;
+
+    case GAMEPLAY:
+        float deltaTime = GetFrameTime();
+        gameTime += deltaTime;
+        spawnTimer += deltaTime;
+        waveTimer += deltaTime;
+
+        PlayerLevelTwoUpdate(deltaTime);
+        EnimiesUpdate();
+
+        bool allEnemiesDefeated = true;
+        for (int i = 0; i < enemyCount; i++)
+        {
+            if (enemies[i].active)
+            {
+                allEnemiesDefeated = false;
+                break;
             }
-            break;
+        }
 
-        case GAMEPLAY:
-            float deltaTime = GetFrameTime();
-            gameTime += deltaTime;
-            spawnTimer += deltaTime;
-            waveTimer += deltaTime;
-
-            UpdatePlayer(deltaTime);
-            UpdateEnemies();
-
-            bool allEnemiesDefeated = true;
-            for (int i = 0; i < enemyCount; i++) {
-                if (enemies[i].active) {
-                    allEnemiesDefeated = false;
-                    break;
-                }
-            }
-
-            if (allEnemiesDefeated) {
-                if (waveTimer >= timeBetweenWaves) {
-                    waveTimer = 0;
-                    StartNextWave();
-                }
-            } else {
+        if (allEnemiesDefeated)
+        {
+            if (waveTimer >= timeBetweenWaves)
+            {
                 waveTimer = 0;
+                StartNextWave();
             }
+        }
+        else
+        {
+            waveTimer = 0;
+        }
 
-            if (player.health <= 0) {
-                currentScreen = GAMEOVER;
-            }
-            break;
-            
-            case GAMEOVER:
-                StopMusicStream(music);
-                PlayMusicStream(whitenoise);
-            break;
+        if (playerLevelTwo.health <= 0)
+        {
+            currentScreen = GAMEOVER;
+        }
+        break;
 
-        default:
-            break;
+    case GAMEOVER:
+        StopMusicStream(soundTrack);
+        PlayMusicStream(gameOver);
+        break;
+
+    default:
+        break;
     }
 }
 
-void LevelTwoDraw(void) {
+void LevelTwoDraw(void)
+{
     BeginDrawing();
     ClearBackground(BLACK);
 
-    switch (currentScreen) {
-        case START: {
-            int centerX = (GetScreenWidth() - startScreenImage.width) / 2;
-            int centerY = (GetScreenHeight() - startScreenImage.height) / 2;
-            DrawTexture(startScreenImage, centerX, centerY, WHITE);
-            DrawText("BEM-VINDO AO INFERNO!", GetScreenWidth() / 2 - MeasureText("BEM-VINDO AO INFERNO!", 20) / 2, GetScreenHeight() / 3 - 10, 20, RED);
-        } break;
+    switch (currentScreen)
+    {
+    case START:
+    {
+        int centerX = (GetScreenWidth() - startScreenImage.width) / 2;
+        int centerY = (GetScreenHeight() - startScreenImage.height) / 2;
+        DrawTexture(startScreenImage, centerX, centerY, WHITE);
+        DrawText("BEM-VINDO AO INFERNO!", GetScreenWidth() / 2 - MeasureText("BEM-VINDO AO INFERNO!", 20) / 2, GetScreenHeight() / 3 - 10, 20, RED);
+    }
+    break;
 
-        case GAMEPLAY:
-            DrawCircleV(player.position, PLAYER_SIZE / 2, player.color);
-            if (player.isAttacking) {
-                DrawCircleLines(player.position.x, player.position.y, ATTACK_RANGE, YELLOW);
+    case GAMEPLAY:
+        DrawCircleV(playerLevelTwo.position, PLAYERLEVELTWO_SIZE / 2, playerLevelTwo.color);
+        if (playerLevelTwo.isAttacking)
+        {
+            DrawCircleLines(playerLevelTwo.position.x, playerLevelTwo.position.y, ATTACK_RANGE, YELLOW);
+        }
+        for (int i = 0; i < enemyCount; i++)
+        {
+            if (enemies[i].active)
+            {
+                DrawCircleV(enemies[i].position, ENEMY_SIZE / 2, enemies[i].color);
             }
-            for (int i = 0; i < enemyCount; i++) {
-                if (enemies[i].active) {
-                    DrawCircleV(enemies[i].position, ENEMY_SIZE / 2, enemies[i].color);
-                }
-            }
-            DrawText(TextFormat("Vida: %d", player.health), 10, 10, 20, RED);
-            DrawText(TextFormat("Tempo: %.2f", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo: %.2f", gameTime), 20) / 2, 10, 20, RED);
-            DrawText(TextFormat("Onda: %d", currentWave), GetScreenWidth() - 100, 10, 20, RED);
-            break;
+        }
+        DrawText(TextFormat("Vida: %d", playerLevelTwo.health), 10, 10, 20, RED);
+        DrawText(TextFormat("Tempo: %.2f", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo: %.2f", gameTime), 20) / 2, 10, 20, RED);
+        DrawText(TextFormat("Onda: %d", currentWave), GetScreenWidth() - 100, 10, 20, RED);
+        break;
 
-        case GAMEOVER:
-            DrawPixelatedBackground();
-            DrawText("FIM DE JOGO", GetScreenWidth() / 2 - MeasureText("FIM DE JOGO", 40) / 2, GetScreenHeight() / 2 - 40, 40, RED);
-            DrawText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), 20) / 2, GetScreenHeight() / 2, 20, RED);
-            DrawText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), GetScreenWidth() / 2 - MeasureText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), 20) / 2, GetScreenHeight() / 2 + 30, 20, RED);
-            break;
+    case GAMEOVER:
+        DrawPixelatedBackground();
+        DrawText("FIM DE JOGO", GetScreenWidth() / 2 - MeasureText("FIM DE JOGO", 40) / 2, GetScreenHeight() / 2 - 40, 40, RED);
+        DrawText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), 20) / 2, GetScreenHeight() / 2, 20, RED);
+        DrawText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), GetScreenWidth() / 2 - MeasureText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), 20) / 2, GetScreenHeight() / 2 + 30, 20, RED);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     EndDrawing();
 }
 
-void LevelTwoUnload(void) {
-    UnloadMusicStream(music);
+void LevelTwoUnload(void)
+{
+    UnloadMusicStream(soundTrack);
     UnloadMusicStream(jumpscare);
-    UnloadMusicStream(whitenoise);
+    UnloadMusicStream(gameOver);
     UnloadTexture(startScreenImage);
     free(enemies);
 }

@@ -3,17 +3,18 @@
 
 #include "raylib.h"
 
-#define PLAYER_SIZE 50
+#define PLAYERLEVELTWO_SIZE 50
 #define ENEMY_SIZE 40
 #define SPAWN_INTERVAL_MIN 1
 #define SPAWN_INTERVAL_MAX 3
-#define PLAYER_HEALTH 3
+#define PLAYERLEVELTWO_HEALTH 3
 #define ATTACK_RANGE 45
 #define ATTACK_COOLDOWN 0.5f
 #define SPAWN_DISTANCE_MIN 200
 #define SPAWN_DISTANCE_MAX 300
 
-typedef enum GameScreen {
+typedef enum GameScreen
+{
     START,
     GAMEPLAY,
     GAMEOVER

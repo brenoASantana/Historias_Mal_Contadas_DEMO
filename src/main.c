@@ -15,63 +15,57 @@
 #include "../include/enemy.h"
 #include "enemy.c"
 
-int main(void) {
-    InitWindow(1280, 720, "Histórias Mal Contadas DEMO");
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
+
+int main(void)
+{
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Histórias Mal Contadas DEMO");
     SetTargetFPS(60);
 
     InitAudioDevice();
 
     int currentLevel = 1; // Começa na introdução
 
-    //while (!WindowShouldClose()) { // Loop principal do programa, continua enquanto a janela não for fechada
-        //switch (currentLevel) {
-         //   case 1:
-                LevelOneInit();
-                do{
-                    
-                //while (currentLevel == 1 && !WindowShouldClose()) {
-                    BeginDrawing();
-                    ClearBackground(BLACK);
+    LevelOneInit();
+    do
+    {
 
-                    LevelOneUpdate();
-                    LevelOneDraw();
+        BeginDrawing();
+        ClearBackground(BLACK);
 
-                    if (isDoorOpen) { // Player conseguiu abrir a porta do level 1
-                        currentLevel++;
-                        LevelOneUnload();
-                    }
+        LevelOneUpdate();
+        LevelOneDraw();
 
-                    EndDrawing();
-                }while(currentLevel == 1 && !WindowShouldClose());
-              //  }
-              //  break;
-CloseAudioDevice();
+        if (isDoorOpen)
+        { // Player conseguiu abrir a porta do level 1
+            currentLevel++;
+            LevelOneUnload();
+        }
+
+        EndDrawing();
+    } while (currentLevel == 1 && !WindowShouldClose());
+
+    CloseAudioDevice();
     CloseWindow();
-    InitWindow(1280, 720, "Histórias Mal Contadas DEMO");
+    
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Histórias Mal Contadas DEMO");
     SetTargetFPS(60);
 
     InitAudioDevice();
     LevelTwoInit();
-            do{
-           // case 2:
-                
-                //while (currentLevel == 2 && !WindowShouldClose()) {
-                    //LevelOneUnload();
-                    BeginDrawing();
-                    ClearBackground(BLACK);
+    do
+    {
 
-                    LevelTwoUpdate();
-                    LevelTwoDraw();
+        BeginDrawing();
+        ClearBackground(BLACK);
 
-                    EndDrawing();
-                }while(currentLevel == 2 && !WindowShouldClose());
-               // }
-            //    break;
+        LevelTwoUpdate();
+        LevelTwoDraw();
 
-           // default:
-           //     break;
-        //}
-   // }
+        EndDrawing();
+    } while (currentLevel == 2 && !WindowShouldClose());
+
     LevelTwoUnload();
     CloseAudioDevice();
     CloseWindow();

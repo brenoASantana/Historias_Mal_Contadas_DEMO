@@ -3,17 +3,18 @@
 
 #include "raylib.h"
 
-#define PLAYER_SPEED 300.0f
+#define PLAYERLEVELTWO_SPEED 300.0f
 
-typedef struct Player {
+typedef struct PlayerLevelTwo
+{
     Vector2 position;
     int health;
     Color color;
     bool isAttacking;
     float attackCooldown;
-} Player;
+} PlayerLevelTwo;
 
-void UpdatePlayer(float deltaTime);
-void PlayerAttack(void);
+void PlayerLevelTwoUpdate(float deltaTime);
+void PlayerLevelTwoAttack(void);
 
 #endif // PLAYERLEVELTWO_H

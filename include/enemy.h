@@ -5,13 +5,14 @@
 
 #define ENEMY_SPEED 100.0f
 
-typedef struct Enemy {
+typedef struct Enemy
+{
     Vector2 position;
     bool active;
     Color color;
 } Enemy;
 
-void SpawnEnemies(void);
-void UpdateEnemies(void);
+void EnimiesSpawn(void);
+void EnimiesUpdate(void);
 
 #endif // ENEMY_H

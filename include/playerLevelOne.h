@@ -1,8 +1,6 @@
 #ifndef PLAYERLEVELONE_H
 #define PLAYERLEVELONE_H
 
-#include "raylib.h"
-
 typedef struct PlayerLevelOne
 {
     int position;
