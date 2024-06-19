@@ -12,4 +12,6 @@ void LevelOneDraw(void);
 void LevelOneUnload(void);
 void AnalyzeInput(char *inputText);
 
+extern bool isDoorOpen;
+
 #endif // LEVELONE_H

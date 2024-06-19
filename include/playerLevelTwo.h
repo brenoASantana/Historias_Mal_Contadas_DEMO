@@ -1,17 +1,19 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYERLEVELTWO_H
+#define PLAYERLEVELTWO_H
 
 #include "raylib.h"
 
-typedef struct Player
-{
+#define PLAYER_SPEED 300.0f
+
+typedef struct Player {
     Vector2 position;
-    Texture2D texture;
     int health;
+    Color color;
+    bool isAttacking;
+    float attackCooldown;
 } Player;
 
-Player CreatePlayer(Vector2 position);
-void UpdatePlayer(Player *player);
-void DrawPlayer(Player player);
+void UpdatePlayer(float deltaTime);
+void PlayerAttack(void);
 
-#endif // PLAYER_H
+#endif // PLAYERLEVELTWO_H
