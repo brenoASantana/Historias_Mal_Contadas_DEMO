@@ -98,9 +98,9 @@ void LevelTwoUpdate(void) {
     UpdateMusicStream(whitenoise);
     switch (currentScreen) {
         case START:
-            if (GetTime() - startTime > 3.0) {
-                currentScreen = GAMEPLAY;
+            if (GetTime() - startTime > 3.0) {                
                 StopMusicStream(jumpscare);
+                currentScreen = GAMEPLAY;
             }
             break;
 
@@ -136,6 +136,7 @@ void LevelTwoUpdate(void) {
             break;
             
             case GAMEOVER:
+                StopMusicStream(music);
                 PlayMusicStream(whitenoise);
             break;
 
