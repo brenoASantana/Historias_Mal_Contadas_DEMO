@@ -70,7 +70,9 @@ void LevelTwoInit(void) {
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
     jumpscare = LoadMusicStream("../assets/sounds/musics/sfx_johnPossessed.ogg");
-    //SetMusicVolume(jumpscare, 0.20); // Set volume for music (1.0 is max level)
+    whitenoise = LoadMusicStream("../assets/sounds/musics/8-Bit White Noise.mp3");
+    SetMusicVolume(jumpscare, 0.20); // Set volume for music (1.0 is max level)
+    SetMusicVolume(whitenoise, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(jumpscare);
     player.position = (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2};
     player.health = PLAYER_HEALTH;
@@ -93,6 +95,7 @@ void LevelTwoInit(void) {
 void LevelTwoUpdate(void) {
     UpdateMusicStream(music);
     UpdateMusicStream(jumpscare);
+    UpdateMusicStream(whitenoise);
     switch (currentScreen) {
         case START:
             if (GetTime() - startTime > 3.0) {
@@ -130,6 +133,10 @@ void LevelTwoUpdate(void) {
             if (player.health <= 0) {
                 currentScreen = GAMEOVER;
             }
+            break;
+            
+            case GAMEOVER:
+                PlayMusicStream(whitenoise);
             break;
 
         default:
@@ -180,6 +187,8 @@ void LevelTwoDraw(void) {
 
 void LevelTwoUnload(void) {
     UnloadMusicStream(music);
+    UnloadMusicStream(jumpscare);
+    UnloadMusicStream(whitenoise);
     UnloadTexture(startScreenImage);
     free(enemies);
 }
