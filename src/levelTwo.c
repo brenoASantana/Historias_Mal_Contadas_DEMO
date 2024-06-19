@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h> // Incluir a biblioteca para manipulação de arquivos
 
 #include "../include/playerLevelTwo.h"
 #include "../include/enemy.h"
@@ -34,7 +35,23 @@ void StartNextWave(void)
     EnimiesSpawn();
 }
 
-//Desenha o white noise do game over
+// Função para salvar as informações no arquivo score.txt
+void SaveScore(float survivedTime, int defeatedEnemies)
+{
+    FILE *file = fopen("score.txt", "w");
+    if (file != NULL)
+    {
+        fprintf(file, "Tempo sobrevivido: %.2f segundos\n", survivedTime);
+        fprintf(file, "Inimigos derrotados: %d\n", defeatedEnemies);
+        fclose(file);
+    }
+    else
+    {
+        printf("Erro ao criar o arquivo score.txt\n");
+    }
+}
+
+// Desenha o white noise do game over
 void DrawPixelatedBackground(void)
 {
     // Define fundo White Noise
@@ -60,9 +77,11 @@ void DrawPixelatedBackground(void)
         }
     }
 }
+
 static Music soundTrack;
 static Music jumpscare;
 static Music gameOver;
+
 void LevelTwoInit(void)
 {
     soundTrack = LoadMusicStream("../assets/sounds/soundtracks/heilag_vagga.mp3");
@@ -145,6 +164,7 @@ void LevelTwoUpdate(void)
         if (playerLevelTwo.health <= 0)
         {
             currentScreen = GAMEOVER;
+            SaveScore(gameTime, defeatedEnemies); // Salva as informações quando o jogo acaba
         }
         break;
 
@@ -188,6 +208,7 @@ void LevelTwoDraw(void)
             }
         }
         DrawText(TextFormat("Vida: %d", playerLevelTwo.health), 10, 10, 20, RED);
+        DrawText("Use as setas do teclado para se mover. Pressione a barra de espaço para atacar.", 10, 60, 20, RED);
         DrawText(TextFormat("Tempo: %.2f", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo: %.2f", gameTime), 20) / 2, 10, 20, RED);
         DrawText(TextFormat("Onda: %d", currentWave), GetScreenWidth() - 100, 10, 20, RED);
         break;
@@ -197,6 +218,7 @@ void LevelTwoDraw(void)
         DrawText("FIM DE JOGO", GetScreenWidth() / 2 - MeasureText("FIM DE JOGO", 40) / 2, GetScreenHeight() / 2 - 40, 40, RED);
         DrawText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), GetScreenWidth() / 2 - MeasureText(TextFormat("Tempo sobrevivido: %.2f segundos", gameTime), 20) / 2, GetScreenHeight() / 2, 20, RED);
         DrawText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), GetScreenWidth() / 2 - MeasureText(TextFormat("Inimigos derrotados: %d", defeatedEnemies), 20) / 2, GetScreenHeight() / 2 + 30, 20, RED);
+        DrawText("Confira sua pontuação no arquivo 'score.txt' criado.", GetScreenWidth() / 2 - MeasureText("Confira sua pontuação no arquivo 'score.txt' criado.", 20) / 2, GetScreenHeight() / 2 + 60, 20, RED);
         break;
 
     default:

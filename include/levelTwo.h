@@ -26,5 +26,6 @@ void LevelTwoDraw(void);
 void LevelTwoUnload(void);
 void StartNextWave(void);
 void DrawPixelatedBackground(void);
+void StartNextWave(void);
 
 #endif // LEVELTWO_H

@@ -40,12 +40,13 @@ int main(void)
         if (isDoorOpen)
         { // Player conseguiu abrir a porta do level 1
             currentLevel++;
-            LevelOneUnload();
+            
         }
 
         EndDrawing();
     } while (currentLevel == 1 && !WindowShouldClose());
 
+    LevelOneUnload();
     CloseAudioDevice();
     CloseWindow();
     
