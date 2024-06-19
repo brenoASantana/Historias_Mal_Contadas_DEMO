@@ -89,13 +89,13 @@ void LevelTwoInit(void)
     PlayMusicStream(soundTrack);
 
     jumpscare = LoadMusicStream("../assets/sounds/effects/jumpscare.ogg");
-    SetMusicVolume(jumpscare, 0.20);  // Set volume for music (1.0 is max level)
+    SetMusicVolume(jumpscare, 0.20); // Set volume for music (1.0 is max level)
 
     gameOver = LoadMusicStream("../assets/sounds/soundtracks/white_noise.mp3");
     SetMusicVolume(gameOver, 0.20); // Set volume for music (1.0 is max level)
-    
+
     PlayMusicStream(jumpscare);
-    
+
     playerLevelTwo.position = (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2};
     playerLevelTwo.health = PLAYERLEVELTWO_HEALTH;
     playerLevelTwo.color = BLUE;

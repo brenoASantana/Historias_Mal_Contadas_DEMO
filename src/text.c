@@ -3,7 +3,6 @@
 
 #include "../include/text.h"
 
-
 char inputText[256] = "\0"; // Buffer para armazenar o texto digitado
 int letterCount = 0;        // Contador de caracteres
 bool enterPressed = false;  // Flag para verificar se Enter foi pressionado
@@ -64,7 +63,6 @@ void DrawTextWithDelay(const char *text, int x, int y, int fontSize, Color baseC
             DrawText(buffer, posX, posY, fontSize, baseColor); // Desenha o texto atual no buffer
             posY += lineHeight;                                // Move para a próxima linha
             bufferIndex = 0;                                   // Reinicia o índice do buffer para o próximo texto
-
         }
         else
         {

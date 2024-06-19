@@ -40,20 +40,19 @@ int main(void)
         if (isDoorOpen)
         { // Player conseguiu abrir a porta do level 1
             currentLevel++;
-            
         }
 
         EndDrawing();
     } while (currentLevel == 1 && !WindowShouldClose());
-
     LevelOneUnload();
+
     CloseAudioDevice();
     CloseWindow();
-    
+
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Histórias Mal Contadas DEMO");
     SetTargetFPS(60);
-
     InitAudioDevice();
+
     LevelTwoInit();
     do
     {
@@ -66,8 +65,8 @@ int main(void)
 
         EndDrawing();
     } while (currentLevel == 2 && !WindowShouldClose());
-
     LevelTwoUnload();
+
     CloseAudioDevice();
     CloseWindow();
 

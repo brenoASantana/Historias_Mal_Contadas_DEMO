@@ -12,8 +12,6 @@ static int charCount = 0;
 static Music soundTrack;
 bool isDoorLocked = true;
 bool isDoorOpen = false;
-int lastXPosition = 10;
-int lastYPosition = 10;
 
 PlayerLevelOne playerLevelOne;
 
@@ -67,7 +65,6 @@ void LevelOneUpdate(void)
 void LevelOneDraw(void)
 {
     DrawText("Histórias Mal Contadas, uma produção da B2 Studios.", 10, 10, 40, DARKGREEN);
-
 }
 
 void AnalyzeInput(char *inputText)
