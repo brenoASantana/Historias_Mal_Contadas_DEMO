@@ -63,10 +63,15 @@ void DrawPixelatedBackground(void)
     }
 }
 static Music music;
+static Music jumpscare;
+static Music whitenoise;
 void LevelTwoInit(void) {
     music = LoadMusicStream("../assets/sounds/musics/heilag_vagga.mp3");
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
+    jumpscare = LoadMusicStream("../assets/sounds/musics/sfx_johnPossessed.ogg");
+    //SetMusicVolume(jumpscare, 0.20); // Set volume for music (1.0 is max level)
+    PlayMusicStream(jumpscare);
     player.position = (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2};
     player.health = PLAYER_HEALTH;
     player.color = BLUE;
@@ -87,10 +92,12 @@ void LevelTwoInit(void) {
 
 void LevelTwoUpdate(void) {
     UpdateMusicStream(music);
+    UpdateMusicStream(jumpscare);
     switch (currentScreen) {
         case START:
             if (GetTime() - startTime > 3.0) {
                 currentScreen = GAMEPLAY;
+                StopMusicStream(jumpscare);
             }
             break;
 
