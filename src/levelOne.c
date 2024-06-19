@@ -10,29 +10,37 @@ static char *fileText = NULL;
 static int charCount = 0;
 static Music music;
 bool isDoorLocked = true;
-bool isDoorOpen = false;
+bool isDoorOpen;
 int lastXPosition = 10;
 int lastYPosition = 10;
 
 PlayerLevelOne player;
 
-void LevelOneInit(void)
-{
+void LevelOneInit(void) {
     music = LoadMusicStream("../assets/sounds/musics/woodland_shadows.mp3");
     SetMusicVolume(music, 0.20); // Set volume for music (1.0 is max level)
     PlayMusicStream(music);
 
     const char *filePath = "../assets/texts/prologue.txt";
     fileText = ReadTextFile(filePath);
-    if (!fileText)
-    {
+    if (!fileText) {
         printf("Failed to read the file.\n");
         return;
     }
 
     charCount = 0;
+<<<<<<< Updated upstream
     player = CreatePlayerLevelOne();
+=======
+    
+    isDoorLocked = true;
+    playerLevelOne = CreatePlayerLevelOne();
+    lastXPosition = 10;
+    lastYPosition = 10;
+    isDoorOpen = false;
+>>>>>>> Stashed changes
 }
+
 
 void LevelOneUpdate(void)
 {
@@ -65,6 +73,7 @@ void LevelOneUpdate(void)
 
 void LevelOneDraw(void)
 {
+    
     DrawText("Histórias Mal Contadas, uma produção da B2 Studios.", 10, 10, 40, DARKGREEN);
     DrawText("Pressione F11 para alternar entre os modos de janela e tela cheia. Pressione ESC para sair.", 10, 60, 20, DARKGREEN);
 
@@ -201,8 +210,8 @@ void AnalyzeInput(char *inputText)
     }
 }
 
-void LevelOneUnload(void)
-{
+void LevelOneUnload(void) {
     free(fileText);
+    fileText = NULL; // Redefine o ponteiro para evitar uso após a liberação
     UnloadMusicStream(music);
 }
