@@ -1,2 +1,2 @@
-Tempo sobrevivido: 8.57 segundos
-Inimigos derrotados: 2
+Tempo sobrevivido: 11.24 segundos
+Inimigos derrotados: 3

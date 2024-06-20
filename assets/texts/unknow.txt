@@ -8,6 +8,6 @@ Exemplo:
 Dica: Explore os ambientes e interaja com os objetos que encontrar.
 Lembre-se de combinar ações e destinos de forma lógica.
 
-Para voltar ao início, digite VOLTAR
+Para voltar ao início, digite VOLTAR.
 
 O que você faz?
