@@ -30,14 +30,14 @@ void DrawPlayerLevelTwo(PlayerTextures textures);
 PlayerTextures LoadPlayerTextures(void)
 {
     PlayerTextures textures;
-    textures.down = LoadTexture("/mnt/data/player_down.png");
-    textures.left = LoadTexture("/mnt/data/player_left.png");
-    textures.right = LoadTexture("/mnt/data/player_right.png");
-    textures.up = LoadTexture("/mnt/data/player_up.png");
-    textures.cross_down = LoadTexture("/mnt/data/player_cross_down.png");
-    textures.cross_left = LoadTexture("/mnt/data/player_cross_left.png");
-    textures.cross_right = LoadTexture("/mnt/data/player_cross_right.png");
-    textures.cross_up = LoadTexture("/mnt/data/player_cross_up.png");
+    textures.down = LoadTexture("../assets/images/sprites/player_down");
+    textures.left = LoadTexture("../assets/images/sprites/player_left");
+    textures.right = LoadTexture("../assets/images/sprites/player_right");
+    textures.up = LoadTexture("../assets/images/sprites/player_up");
+    textures.cross_down = LoadTexture("../assets/images/sprites/player_cross_down.png");
+    textures.cross_left = LoadTexture("../assets/images/sprites/player_cross_left.png");
+    textures.cross_right = LoadTexture("../assets/images/sprites/player_cross_right.png");
+    textures.cross_up = LoadTexture("../assets/images/sprites/player_cross_up.png");
     return textures;
 }
 
