@@ -100,6 +100,18 @@ void AnalyzeInput(char *inputText)
         }
         charCount = 0;
         playerLevelOne.position = 2; // Player está próximo da mesa
+    } else if (strcmp(inputText, "VOLTAR") == 0)
+    {
+        const char *newFilePath = "../assets/texts/prologue.txt";
+        free(fileText);
+        fileText = ReadTextFile(newFilePath);
+        if (!fileText)
+        {
+            printf("Failed to read the file.\n");
+            return;
+        }
+        charCount = 0;
+        playerLevelOne.position = 0; // Player está no spawn
     }
     else if (strcmp(inputText, "PEGAR CHAVE") == 0)
     {
